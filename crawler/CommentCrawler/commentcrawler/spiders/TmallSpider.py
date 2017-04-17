@@ -36,9 +36,13 @@ class TmallSpider(scrapy.Spider):
                 'isg':'AikpBI00WtENd2aQhdgdXB8vONXKrB0oyAa8HMsepZBPkkmkE0Yt-BeAIoFe'
         }
 
+    def __init__(self, cat=None, url=None):
+        if not cat:
+            self.start_urls = {cat: url}
+
     def start_requests(self):
-        for k,v in self.start_urls.iteritems():
-            yield scrapy.Request(v,cookies=self.cookies,callback=self.parse,meta={'cat':k})
+        for k, v in self.start_urls.iteritems():
+            yield scrapy.Request(v, cookies=self.cookies,callback=self.parse,meta={'cat':k})
 
     def parse(self, response):
         sel = scrapy.Selector(response)
