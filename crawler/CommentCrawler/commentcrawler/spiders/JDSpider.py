@@ -54,8 +54,8 @@ class JDSpider(scrapy.Spider):
                 dd = sel.xpath('//div[@id="detail-param"]//tr/td[2]/text()').extract()
 
             if len(dt) == 0:
-            	dt = sel.xpath('//table[@class="Ptable"]//tr/td[1]/text()').extract()
-            	dd = sel.xpath('//table[@class="Ptable"]//tr/td[2]/text()').extract()
+                dt = sel.xpath('//table[@class="Ptable"]//tr/td[1]/text()').extract()
+                dd = sel.xpath('//table[@class="Ptable"]//tr/td[2]/text()').extract()
 
             lenth = len(dd)
             if len(dt)<lenth:
@@ -158,13 +158,9 @@ class JDSpider(scrapy.Spider):
                 salt = string.join(random.sample('zyxwvutsrqponmlkjihgfedcba', 2)).replace(' ','')
                 salt += str(random.randint(100000,999999))
                 yield Request(
-                    url="http://sclub.jd.com/productpage/p-%s-s-0-t-3-p-%d.html?callback=fetchJSON_comment98%s"%(product_id[3:],page,salt),
+                    url="http://sclub.jd.com/productpage/p-%s-s-0-t-3-p-%d.html?callback=fetchJSON_comment98%s" % (product_id[3:], page, salt),
                     callback=self.CommentParse,
-                    meta={'product_id':product_id,
-                    'page':page,
-                    'salt':salt,
-                    't':0
-                    }
+                    meta={'product_id':product_id, 'page': page, 'salt': salt, 't': 0}
                     )
 
 

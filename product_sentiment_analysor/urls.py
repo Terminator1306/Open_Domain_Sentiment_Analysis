@@ -16,7 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from web import views
+
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^main/$', ),
+    # url(r'^admin/', admin.site.urls),
+    url(r'^crawler/$', views.crawler, name='crawler'),
+    url(r'^sentiment_product/$', views.sentiment_product, name='sentiment_product'),
+    url(r'^sentiment_comment/$', views.sentiment_comment, name='sentiment_comment'),
+    url(r'^sentiment_brand/$', views.sentiment_brand, name='sentiment_brand'),
+    url(r'^sentiment_comment/compute/comment/$', views.compute_sentiment_comment, name='compute_comment'),
+    url(r'^$', views.home, name='home')
 ]

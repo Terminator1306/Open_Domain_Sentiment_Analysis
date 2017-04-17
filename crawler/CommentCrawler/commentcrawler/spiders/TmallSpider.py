@@ -8,9 +8,11 @@ import HTMLParser
 
 class TmallSpider(scrapy.Spider):
     name = "Tmall"
+    pages = 0
+    maxpage = 10
     allowed_domains = ["tmall.com"]
     start_urls = {
-        'phone':"https://list.tmall.com/search_product.htm?q=%CA%D6%BB%FA",
+        'phone':"https://list.tmall.com/search_product.htm?spm=a220m.1000858.0.0.muAm62&cat=50024400&q=%CA%D6%BB%FA&sort=s&style=g&search_condition=7&from=sn_1_rightnav&industryCatId=50024400#J_crumbs",
         # 'laptop':"https://list.tmall.com/search_product.htm?spm=875.7931836/A.subpannel2016040.22.RAIxE6&cat=50024399&acm=2016031437.1003.2.720502&aldid=0XR95i8Y&theme=663&scm=1003.2.2016031437.OTHER_1458241115467_720502&pos=1",
         # 'refrigerator':"https://list.tmall.com/search_product.htm?spm=a222t.7794920.fsnav.1.mpZFxJ&cat=50918004&acm=lb-zebra-24139-328537.1003.8.455785&scm=1003.8.lb-zebra-24139-328537.ITEM_14458832193540_455785",
         # 'novel':'https://list.tmall.com/search_product.htm?spm=a223b.7742558.8309007222.12.W59Byp&cat=50021926&sort=s&acm=lb-zebra-7852-323689.1003.8.450706&style=g&from=sn_1_cat&scm=1003.8.lb-zebra-7852-323689.ITEM_14432252898171_450706&tmhkmain=0#J_crumbs',
@@ -37,11 +39,13 @@ class TmallSpider(scrapy.Spider):
     def start_requests(self):
         for k,v in self.start_urls.iteritems():
             yield scrapy.Request(v,cookies=self.cookies,callback=self.parse,meta={'cat':k})
-    
 
     def parse(self, response):
         sel = scrapy.Selector(response)
         items = sel.xpath('//div[@class="product  "]')
+        next_page = sel.xpath('//a[@class="ui-page-next"]/@href').extract()
+        self.pages += 1
+        # print len(items)
         for item in items:
             # item = items[0]
             product_id = "TM_"+item.xpath("@data-id").extract()[0]
@@ -52,6 +56,13 @@ class TmallSpider(scrapy.Spider):
                 meta={'price':price,'product_id':product_id,'url':url,'cat':response.meta['cat']},
                 cookies=self.cookies,
                 callback=self.CommentCountParse
+                )
+        if len(next_page)>0 and self.pages < self.maxpage:
+            yield scrapy.Request(
+                url="https://list.tmall.com/search_product.htm"+next_page[0],
+                callback = self.parse,
+                cookies = self.cookies,
+                meta = {'cat':response.meta['cat']}
                 )
 
 
@@ -66,7 +77,6 @@ class TmallSpider(scrapy.Spider):
             cookies=self.cookies,
             callback=self.CommentTagParse
             )
-
 
     def CommentTagParse(self,response):
         sel = scrapy.Selector(response)
@@ -85,7 +95,6 @@ class TmallSpider(scrapy.Spider):
             callback=self.ProductParse
             )
 
-
     def ProductParse(self,response):
         sel = scrapy.Selector(response)
         body = sel.xpath("//body").extract()[0]
@@ -99,15 +108,15 @@ class TmallSpider(scrapy.Spider):
         brand = html_parser.unescape(brand)
         if len(brand)>100:
             brand = ""
-        with open("brand.txt","a") as f:
-            f.write(brand+"\n")
+        # with open("brand.txt","a") as f:
+        #     f.write(brand+"\n")
         name = sel.xpath("//meta[@name='keywords']/@content").extract()[0]
         if len(detail)>0:
             keys = detail.xpath("./tr[not(@class)]/th/text()").extract()
             values = detail.xpath("./tr[not(@class)]/td/text()").extract()
             for index,key in enumerate(keys):
                 attribute[key] = values[index]
-                if re.compile(u"型号").match(key):
+                if re.compile(u".*型号").match(key):
                     model = values[index]
         product = Product()
         product['comment_count'] = response.meta['comment_count']
@@ -122,7 +131,7 @@ class TmallSpider(scrapy.Spider):
         product['category'] = response.meta['cat']
         yield product
 
-        limit = 99
+        limit = 20
         pages = int(response.meta['comment_count'])/20+1 
         if pages > limit:
             pages = limit
@@ -133,7 +142,6 @@ class TmallSpider(scrapy.Spider):
             cookies=self.cookies,
             callback=self.CommentParse
             )
-
 
     def CommentParse(self,response):
         sel = scrapy.Selector(response)
@@ -154,12 +162,13 @@ class TmallSpider(scrapy.Spider):
                     comment['attribute']['pics'] = True
                 comment['attribute']['appendComment'] = rate['appendComment']
                 comment['attribute']['userlevel'] = rate['tamllSweetLevel']
-                if rate['attributesMap'].has_key('worth_score'):
+                if rate['attributesMap'] != '' and rate['attributesMap'].containsKey('worth_score'):
                     comment['attribute']['worth_score'] = rate['attributesMap']['worth_score']
                 comment['attribute']['aliMallSeller'] = rate['aliMallSeller']
                 comment['attribute']['auctionPrice'] = rate['auctionPrice']
                 yield comment
         except Exception,e:
+            print str(e)
             lost = Lost()
             lost['item_type'] = 'lost'
             lost['url'] = response.url

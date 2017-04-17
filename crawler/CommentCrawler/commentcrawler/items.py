@@ -45,6 +45,13 @@ class Lost(scrapy.Item):
     valid = scrapy.Field()
 
 
-
-    
-        
+class zol_Comment(scrapy.Item):
+    item_type = scrapy.Field()
+    good = scrapy.Field()
+    bad = scrapy.Field()
+    summary = scrapy.Field()
+    user = scrapy.Field()
+    date = scrapy.Field()
+    helpless = scrapy.Field()
+    helpful = scrapy.Field()
+    product_id = scrapy.Field()

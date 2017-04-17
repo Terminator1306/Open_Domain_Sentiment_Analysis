@@ -25,48 +25,48 @@ def load_data():
     degree6 = []
     feature = []
 
-    for i in open(u"../sentiment_data/negative_words.txt", "r"):
+    for i in open(u"sentiment_analysor/sentiment_data/negative_words.txt", "r"):
         s = i.strip()
         negative_words.append(s.decode('gbk'))
-    for i in open(u"../sentiment_data/positive_words.txt", "r"):
+    for i in open(u"sentiment_analysor/sentiment_data/positive_words.txt", "r"):
         s = i.strip()
         positive_words.append(s.decode('gbk'))
-    for i in open(u"../sentiment_data/deny_words.txt", "r"):
+    for i in open(u"sentiment_analysor/sentiment_data/deny_words.txt", "r"):
         s = i.strip()
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         deny_words.append(s.decode('utf-8'))
-    for i in open(u"../sentiment_data/d1.txt", 'r'):
+    for i in open(u"sentiment_analysor/sentiment_data/d1.txt", 'r'):
         s = i.strip()
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         degree1.append(s.decode('utf-8'))
-    for i in open(u"../sentiment_data/d2.txt", 'r'):
+    for i in open(u"sentiment_analysor/sentiment_data/d2.txt", 'r'):
         s = i.strip()
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         degree2.append(s.decode('utf-8'))
-    for i in open(u"../sentiment_data/d3.txt", 'r'):
+    for i in open(u"sentiment_analysor/sentiment_data/d3.txt", 'r'):
         s = i.strip()
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         degree3.append(s.decode('utf-8'))
-    for i in open(u"../sentiment_data/d4.txt", 'r'):
+    for i in open(u"sentiment_analysor/sentiment_data/d4.txt", 'r'):
         s = i.strip()
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         degree4.append(s.decode('utf-8'))
-    for i in open(u"../sentiment_data/d5.txt", 'r'):
+    for i in open(u"sentiment_analysor/sentiment_data/d5.txt", 'r'):
         s = i.strip()
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         degree5.append(s.decode('utf-8'))
-    for i in open(u"../sentiment_data/d6.txt", 'r'):
+    for i in open(u"sentiment_analysor/sentiment_data/d6.txt", 'r'):
         s = i.strip()
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         degree6.append(s.decode('utf-8'))
-    for i in open('../output/aspect/aspect.txt', 'r'):
+    for i in open('sentiment_analysor/aspect_data/aspect.txt', 'r'):
         feature.append(i.strip().decode('utf-8').split(','))
 
     return feature, negative_words, positive_words, deny_words, [degree1, degree2, degree3, degree4, degree5, degree6]
@@ -374,6 +374,6 @@ def main():
     print 'finish'
 
 
-main()
+# main()
 # compute_sentiment("使用中对双击截屏感觉不好，灵敏度不强，不知道哪里的才是触点。没有双击屏幕唤醒功能，美中不足")
 # compute_sentiment(u"买给妈妈用的，各种功能齐全，系统纯净，价格也很合适，希望妈妈用得开心！")

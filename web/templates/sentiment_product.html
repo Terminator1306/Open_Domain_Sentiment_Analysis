@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/web/sentiment_product.js' %}"></script>
+{% endblock %}
+{% block title %} 情感计算 {% endblock %}
+{% block content %}
+    <div class="panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">情感计算 产品</h3>
+        </div>
+        <div class="panel-body">
+             <div class="col-sm-2">
+                电商平台
+            </div>
+            <div class="col-sm-10 btn-group">
+                <button type="button" class="btn btn-default">天猫</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">切换下拉菜单</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">天猫</a></li>
+                    <li><a href="#">京东</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-2">
+                商品类型
+            </div>
+            <div class="col-sm-10 btn-group">
+                <button type="button" class="btn btn-default">手机</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">切换下拉菜单</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">手机</a></li>
+{#                    <li><a href="#">笔记本</a></li>#}
+                </ul>
+            </div>
+
+            <div class="col-sm-2">
+                品牌
+            </div>
+            <div class="col-sm-10 btn-group">
+                 <button type="button" class="btn btn-default">小米</button>
+                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                     <span class="caret"></span>
+                     <span class="sr-only">切换下拉菜单</span>
+                 </button>
+                 <ul class="dropdown-menu" role="menu">
+                     <li><a href="#">小米</a></li>
+                     <li><a href="#">苹果</a></li>
+                 </ul>
+            </div>
+
+            <div class="col-sm-2">
+                产品
+            </div>
+            <div class="col-sm-10 btn-group">
+                 <button type="button" class="btn btn-default">小米</button>
+                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                     <span class="caret"></span>
+                     <span class="sr-only">切换下拉菜单</span>
+                 </button>
+                 <ul class="dropdown-menu" role="menu">
+                     <li><a href="#">小米</a></li>
+                     <li><a href="#">苹果</a></li>
+                 </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -6,18 +6,18 @@ import json
 import MySQLdb
 
 class LostSpider(scrapy.Spider):
-    name = "lost"
-    allowed_domains = ["jd.com","3.cn"]
-    db = MySQLdb.connection("127.0.0.1","root","12345","crawler")
+    # name = "lost"
+    # allowed_domains = ["jd.com","3.cn"]
+    # db = MySQLdb.connection("127.0.0.1","root","","tmall")
     # custom_settings = {
     #  'ITEM_PIPELINES':{'lostPipeline': 300},
     # }
     
-    def start_requests(self):
-        c = db.cursor()
-        c.execute("select product_id,url from lost where valid = '1'")
-        for lost in c.fetchall():
-            yield scrapy.Request(lost[1],callback=self.parse,meta={'product_id':lost[0]})
+    # def start_requests(self):
+        # c = db.cursor()
+        # c.execute("select product_id,url from lost where valid = '1'")
+        # for lost in c.fetchall():
+        #     yield scrapy.Request(lost[1],callback=self.parse,meta={'product_id':lost[0]})
 
 
     def parse(self, response):

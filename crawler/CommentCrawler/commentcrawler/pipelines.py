@@ -66,8 +66,10 @@ class Pipeline(object):
 
     def _conditional_insert(self, tx, item):
         if item['item_type'] == 'comment':
-            sql = "insert into comment (product_id, comment_id, referenceName, creationTime, content) values ('%s', '%s', '%s', '%s', '%s')"%(item['product_id'],
-                item['comment_id'],item['referenceName'],item['creationTime'],item['content'])
+            sql = "insert into comment (product_id, comment_id, referenceName, creationTime, content, attribute) values ('%s', '%s', '%s', '%s', '%s','%s')"%(item['product_id'],
+                item['comment_id'],item['referenceName'],item['creationTime'], item['content'], json.dumps(item['attribute'],ensure_ascii=False))
+            # with open("result.txt","w") as f:
+            #     f.write(sql.encode('utf-8'))
             tx.execute(sql)
         elif item['item_type'] == 'product':
             sql = "insert into product (product_id, comment_count, brand, model, price, name,category ,commentTag, attribute) values ('%s', '%s', '%s','%s', '%s', '%s', '%s', '%s', '%s')"%(item['product_id'],item['comment_count'],item['brand'],item['model'],item['price'],
@@ -77,6 +79,9 @@ class Pipeline(object):
         #     if item['content'] == 'empty page':
         #         sql = "insert into lost (product_id, page, url, valid) values ('%s', '%s', '%s', '%s')"%(item['product_id'],item['page'],item['url'],item['valid'])
         #         tx.execute(sql)
+        elif item['item_type'] == 'zol_comment':
+            sql = "insert into pos_neg (product_id, good, bad, summary, user, date, helpful, helpless) values ('%s','%s','%s','%s','%s','%s','%s', '%s')" % (item['product_id'], item['good'], item['bad'], item['summary'], item['user'], item['date'], item['helpful'], item['helpless'])
+            tx.execute(sql)
 
  
     def handle_error(self, e):

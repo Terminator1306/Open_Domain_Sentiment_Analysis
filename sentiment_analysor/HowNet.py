@@ -152,7 +152,7 @@ class Primitive(object):
         if cls.all_primitives is None:
             cls.all_primitives = {}
             cls.primitives_id = {}
-            with open('../sentiment_data/WHOLE.DAT') as f:
+            with open('sentiment_analysor/sentiment_data/WHOLE.DAT') as f:
                 for line in f:
                     line_arr = line.strip().split()
 
@@ -169,7 +169,7 @@ class Primitive(object):
 
         if cls.all_words is None:
             cls.all_words = {}
-            with open('../sentiment_data/glossary.dat') as f:
+            with open('sentiment_analysor/sentiment_data/glossary.dat') as f:
                 for line in f:
                     word = cls.parse_word(line.strip())
 

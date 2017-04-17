@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block include_js %}
+    <script type="text/javascript" src="{% static 'js/echarts.common.min.js' %}"></script>
+{% endblock %}
+{% block body_before_js %}
+    <script type="text/javascript">
+        function load_bar(val, aspect) {
+            var bar = echarts.init($("#result").get(0));
+            var option = {
+                title : {
+                    text: '各属性情感值'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['情感值']
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : aspect
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'情感值',
+                        type:'bar',
+                        data:val
+                    }
+                ]
+            };
+            bar.setOption(option);
+        }
+    </script>
+{% endblock %}
+{% block body_after_js %}
+    <script type="text/javascript">
+        $("#confirm").click(function () {
+            var data = {};
+            data.comment = $("#comment").val();
+            $("#confirm").text("计算中");
+            $("#confirm").attr("disabled", true);
+            $.getJSON("{% url 'compute_comment' %}", data, function(data){
+                load_bar(data.value, data.aspect);
+                $("#confirm").text("确定");
+                $("#confirm").attr("disabled", false);
+            });
+        });
+    </script>
+{% endblock %}
+{% block title %} 情感计算 {% endblock %}
+{% block content %}
+    <div class="panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">情感计算 评论</h3>
+        </div>
+        <div class="panel-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <form role="form">
+                            <label for="comment">输入评论:</label>
+                            <textarea id="comment" class="form-control" rows="5"></textarea>
+                        </form>
+                        <div class="col-sm-2">产品类别：</div>
+                        <div class="col-sm-8 btn-group">
+                            <button type="button" class="btn btn-default">{{ first }}</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% for cat in category %}
+                                    <li><a href="#">{{ cat }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="btn btn-primary" id="confirm">确定</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8" id="result" style="height: 500px"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
