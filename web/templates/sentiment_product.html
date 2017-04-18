@@ -49,9 +49,10 @@
                      <span class="caret"></span>
                      <span class="sr-only">切换下拉菜单</span>
                  </button>
-                 <ul class="dropdown-menu" role="menu">
-                     <li><a href="#">小米</a></li>
-                     <li><a href="#">苹果</a></li>
+                 <ul class="dropdown-menu" role="menu"  style="height:30ex;overflow:scroll">
+                     {% for b in brand %}
+                         <li><a href="#" >{{ b.brand }}</a></li>
+                     {% endfor %}
                  </ul>
             </div>
 

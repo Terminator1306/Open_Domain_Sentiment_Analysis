@@ -6,9 +6,7 @@ from django.http import HttpResponse
 
 from django.shortcuts import render
 from sentiment_analysor import sentiment
-
-# Create your views here.
-# logger = logging.getLogger('aaa')
+from models import *
 
 
 def crawler(request):
@@ -26,10 +24,10 @@ def sentiment_comment(request):
 
 def sentiment_product(request):
     category = ["手机", "笔记本"]
-    platform = ["天猫", "淘宝"]
-    brand = []
+    platform = ["天猫", "京东"]
+    brand = Url.objects.filter(platform='tm', category='phone')
     product = []
-    return render(request, "sentiment_product.html")
+    return render(request, "sentiment_product.html", {"brand": brand})
 
 
 def sentiment_brand(request):

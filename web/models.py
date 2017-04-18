@@ -19,12 +19,14 @@ class Product(models.Model):
 
 
 class Comment(models.Model):
-    product_id = models.CharField(max_length=254)
+    product_id = models.ForeignKey(Product)
     comment_id = models.CharField(max_length=254)
     referenceName = models.CharField(max_length=254, default='')
     creationTime = models.CharField(max_length=254, default='')
     content = models.TextField()
     attribute = models.TextField()
+    good_aspect = models.TextField(default='')
+    bad_aspect = models.TextField(default='')
 
     class Meta:
         unique_together = ("product_id", "comment_id")
