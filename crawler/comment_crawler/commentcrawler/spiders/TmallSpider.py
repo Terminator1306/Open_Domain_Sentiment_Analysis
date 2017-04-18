@@ -1,9 +1,9 @@
 #coding:utf-8
 import scrapy
 import re
-from commentcrawler.items import *
 import json
 import HTMLParser
+from commentcrawler.items import *
 
 
 class TmallSpider(scrapy.Spider):
@@ -36,13 +36,14 @@ class TmallSpider(scrapy.Spider):
                 'isg':'AikpBI00WtENd2aQhdgdXB8vONXKrB0oyAa8HMsepZBPkkmkE0Yt-BeAIoFe'
         }
 
-    def __init__(self, cat=None, url=None):
+    def __init__(self, cat=None, url=None, **kwargs):
+        super(TmallSpider, self).__init__(**kwargs)
         if not cat:
             self.start_urls = {cat: url}
 
     def start_requests(self):
         for k, v in self.start_urls.iteritems():
-            yield scrapy.Request(v, cookies=self.cookies,callback=self.parse,meta={'cat':k})
+            yield scrapy.Request(v, cookies=self.cookies, callback=self.parse, meta={'cat':k})
 
     def parse(self, response):
         sel = scrapy.Selector(response)
@@ -159,7 +160,7 @@ class TmallSpider(scrapy.Spider):
                 comment['product_id'] = response.meta['product_id']
                 comment['comment_id'] = rate['id']
                 comment['creationTime'] = rate['rateDate']
-                comment['content'] = rate['rateContent']
+                comment['content'] = rate['rateContent'].strip().replace("\n", "")
                 comment['item_type'] = 'comment'
                 comment['referenceName'] = rate['auctionSku']
                 if len(rate['pics'])>0:
@@ -173,11 +174,11 @@ class TmallSpider(scrapy.Spider):
                 yield comment
         except Exception,e:
             print str(e)
-            lost = Lost()
-            lost['item_type'] = 'lost'
-            lost['url'] = response.url
-            lost['content'] = str(e)
-            lost['page'] = response.meta['page']
-            lost['product_id'] = response.meta['product_id']
-            lost['valid'] = 1
+            # lost = Lost()
+            # lost['item_type'] = 'lost'
+            # lost['url'] = response.url
+            # lost['content'] = str(e)
+            # lost['page'] = response.meta['page']
+            # lost['product_id'] = response.meta['product_id']
+            # lost['valid'] = 1
             # yield lost

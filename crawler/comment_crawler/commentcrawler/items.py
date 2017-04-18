@@ -7,6 +7,7 @@
  
 import scrapy
 
+
 class Product(scrapy.Item):
     item_type = scrapy.Field()
     product_id = scrapy.Field()
@@ -55,3 +56,14 @@ class zol_Comment(scrapy.Item):
     helpless = scrapy.Field()
     helpful = scrapy.Field()
     product_id = scrapy.Field()
+
+
+class Url(scrapy.Item):
+    item_type = scrapy.Field()
+    category = scrapy.Field()
+    brand = scrapy.Field()
+    platform = scrapy.Field()
+    url = scrapy.Field()
+
+
+

@@ -4,9 +4,10 @@ from scrapy.http import Request
 import json
 import re
 import threading,time
-from commentcrawler.items import *
 import random
 import string
+from commentcrawler.items import *
+
 
 class JDSpider(scrapy.Spider):
     name = "JD_SJ"
@@ -180,7 +181,7 @@ class JDSpider(scrapy.Spider):
                 for i in mjson['comments']:
                     comment = Comment()
                     comment['item_type'] = 'comment'
-                    comment['content'] = i['content']
+                    comment['content'] = i['content'].strip().replace("\n", "")
                     comment['product_id'] = product_id
                     comment['comment_id'] = i['id']
                     comment['referenceName'] = i['referenceName'] 

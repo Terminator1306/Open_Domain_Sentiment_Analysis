@@ -7,7 +7,6 @@
 
 
 import datetime
-import pymongo
 import MySQLdb
 import MySQLdb.cursors
 import re
@@ -28,9 +27,9 @@ class Pipeline(object):
         # self.collection = db[self.col]
         self.dbpool = adbapi.ConnectionPool('MySQLdb',
             host = '127.0.0.1',
-            db = 'tmall',
+            db = 'gp_web',
             user = 'root',
-            passwd = '',
+            passwd = '12345',
             cursorclass = MySQLdb.cursors.DictCursor,
             charset = 'utf8',
             use_unicode = True
@@ -81,6 +80,9 @@ class Pipeline(object):
         #         tx.execute(sql)
         elif item['item_type'] == 'zol_comment':
             sql = "insert into pos_neg (product_id, good, bad, summary, user, date, helpful, helpless) values ('%s','%s','%s','%s','%s','%s','%s', '%s')" % (item['product_id'], item['good'], item['bad'], item['summary'], item['user'], item['date'], item['helpful'], item['helpless'])
+            tx.execute(sql)
+        elif item['item_type'] == 'url':
+            sql = "insert into web_url (brand, platform, url, category) VALUES ('%s','%s','%s','%s')" % (item['brand'], item['platform'], item['url'], item['category'])
             tx.execute(sql)
 
  
