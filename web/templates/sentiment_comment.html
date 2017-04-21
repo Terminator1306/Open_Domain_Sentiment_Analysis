@@ -49,21 +49,31 @@
             };
             bar.setOption(option);
         }
+
+        $().ready(function () {
+            $("#confirm").click(function () {
+                var data = {};
+                data.comment = $("#comment").val();
+                $("#confirm").text("计算中");
+                $("#confirm").attr("disabled", true);
+                $.getJSON("{% url 'compute_comment' %}", data, function(data){
+                    load_bar(data.value, data.aspect);
+                    $("#confirm").text("确定");
+                    $("#confirm").attr("disabled", false);
+                });
+            });
+
+            $(".cat").each(function () {
+                $(this).click(function () {
+                    $("#show_cat").text($(this).text())
+                })
+            });
+        })
     </script>
 {% endblock %}
 {% block body_after_js %}
     <script type="text/javascript">
-        $("#confirm").click(function () {
-            var data = {};
-            data.comment = $("#comment").val();
-            $("#confirm").text("计算中");
-            $("#confirm").attr("disabled", true);
-            $.getJSON("{% url 'compute_comment' %}", data, function(data){
-                load_bar(data.value, data.aspect);
-                $("#confirm").text("确定");
-                $("#confirm").attr("disabled", false);
-            });
-        });
+
     </script>
 {% endblock %}
 {% block title %} 情感计算 {% endblock %}
@@ -82,14 +92,14 @@
                         </form>
                         <div class="col-sm-2">产品类别：</div>
                         <div class="col-sm-8 btn-group">
-                            <button type="button" class="btn btn-default">{{ category.0 }}</button>
+                            <button type="button" class="btn btn-default" id="show_cat">{{ category.0.name }}</button>
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
                                 <span class="sr-only">切换下拉菜单</span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 {% for cat in category %}
-                                    <li><a href="#">{{ cat }}</a></li>
+                                    <li class="cat"><a>{{ cat.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>

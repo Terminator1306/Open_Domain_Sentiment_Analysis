@@ -37,3 +37,9 @@ class Url(models.Model):
     brand = models.CharField(max_length=255, default='')
     platform = models.CharField(max_length=255, default='')
     url = models.CharField(max_length=255, primary_key=True)
+
+
+class NameKey(models.Model):
+    name = models.CharField(max_length=255, default='')
+    key = models.CharField(max_length=255)
+    type = models.CharField(max_length=255, default='')

@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
-{% block js %}
-    <script type="text/javascript" src="{% static 'js/web/sentiment_product.js' %}"></script>
+{% load static %}
+{% block include_js %}
+{% endblock %}
+{% block body_before_js %}
+    <script type="text/javascript">
+        function set_brand(cat) {
+{#            $.getJSON("{% url '' %}",{"cat":cat},function () {#}
+{##}
+{#            })#}
+        }
+
+        $().ready(function () {
+            $(".cat").each(function () {
+                $(this).click(function () {
+                    $("#show_cat").text($(this).text())
+                })
+            })
+        })
+    </script>
 {% endblock %}
 {% block title %} 情感计算 {% endblock %}
 {% block content %}
@@ -14,14 +30,14 @@
                 电商平台
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default">{{ platform.0 }}</button>
+                <button type="button" class="btn btn-default" id="show_platform">{{ platform.0.name }}</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     {% for p in platform %}
-                        <li><a href="#">{{ p }}</a></li>
+                        <li class="platform"><a>{{ p.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -30,14 +46,14 @@
                 商品类型
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default">{{ category.0 }}</button>
+                <button type="button" class="btn btn-default" id="show_cat">{{ category.0.name }}</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     {% for c in category %}
-                        <li><a href="#">{{ c }}</a> </li>
+                        <li class="cat"><a href="#">{{ c.name }}</a> </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -46,7 +62,7 @@
                 品牌
             </div>
             <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default">{{ brand.0.brand }}</button>
+                 <button type="button" class="btn btn-default" id="show_brand">{{ brand.0.brand }}</button>
                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                      <span class="caret"></span>
                      <span class="sr-only">切换下拉菜单</span>
@@ -62,7 +78,7 @@
                 产品
             </div>
             <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default">XT1650-05 Moto Z 标准版</button>
+                 <button type="button" class="btn btn-default" id="show_product">XT1650-05 Moto Z 标准版</button>
                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                      <span class="caret"></span>
                      <span class="sr-only">切换下拉菜单</span>
