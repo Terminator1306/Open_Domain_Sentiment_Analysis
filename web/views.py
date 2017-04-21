@@ -10,7 +10,10 @@ from models import *
 
 
 def crawler(request):
-    return render(request, "crawler.html")
+    category = ["手机", "笔记本"]
+    platform = ["天猫", "京东"]
+    brand = Url.objects.filter(platform='tm', category='phone')
+    return render(request, "crawler.html", {"brand": brand, "category": category, "platform": platform})
 
 
 def home(request):
@@ -19,7 +22,7 @@ def home(request):
 
 def sentiment_comment(request):
     category = ["手机", "笔记本"]
-    return render(request, "sentiment_comment.html", {"category": category, "first": category[0]})
+    return render(request, "sentiment_comment.html", {"category": category})
 
 
 def sentiment_product(request):
@@ -27,16 +30,19 @@ def sentiment_product(request):
     platform = ["天猫", "京东"]
     brand = Url.objects.filter(platform='tm', category='phone')
     product = []
-    return render(request, "sentiment_product.html", {"brand": brand})
+    return render(request, "sentiment_product.html", {"brand": brand, "category": category, "platform": platform})
 
 
 def sentiment_brand(request):
-    return render(request, "sentiment_brand.html")
+    category = ["手机", "笔记本"]
+    platform = ["天猫", "京东"]
+    brand = Url.objects.filter(platform='tm', category='phone')
+    return render(request, "sentiment_brand.html", {"brand": brand, "category": category, "platform": platform})
 
 
 def compute_sentiment_comment(request):
     data = request.GET
     sentiment_result = sentiment.compute_sentiment(data['comment'])
-    result = {'aspect': sentiment_result.keys(), 'value': [sentiment_result[aspect] for aspect in sentiment_result.keys()]}
+    result = {'aspect': sentiment_result.keys(),
+              'value': [sentiment_result[aspect] for aspect in sentiment_result.keys()]}
     return HttpResponse(json.dumps(result))
-

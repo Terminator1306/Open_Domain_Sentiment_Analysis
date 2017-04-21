@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block js %}
-    <script type="text/javascript" src="{% static 'js/web/crawler.js' %}"></script>
-{% endblock %}
 {% block title %} 数据采集 {% endblock %}
 {% block content %}
     <div class="panel-primary">
@@ -17,14 +14,15 @@
                 电商平台
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default">天猫</button>
+                <button type="button" class="btn btn-default">{{ platform.0 }}</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">天猫</a></li>
-                    <li><a href="#">京东</a></li>
+                    {% for p in platform %}
+                        <li><a href="#">{{ p }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
 
@@ -32,15 +30,15 @@
                 商品类型
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default">全部</button>
+                <button type="button" class="btn btn-default">{{ category.0 }}</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">全部</a></li>
-                    <li><a href="#">手机</a></li>
-{#                    <li><a href="#">笔记本</a></li>#}
+                    {% for c in category %}
+                        <li><a href="#">{{ c }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
 
@@ -48,15 +46,15 @@
                 品牌
             </div>
             <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default">全部</button>
+                 <button type="button" class="btn btn-default">{{ brand.0.brand }}</button>
                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                      <span class="caret"></span>
                      <span class="sr-only">切换下拉菜单</span>
                  </button>
-                 <ul class="dropdown-menu" role="menu">
-                     <li><a href="#">全部</a></li>
-                     <li><a href="#">小米</a></li>
-                     <li><a href="#">苹果</a></li>
+                 <ul class="dropdown-menu" role="menu" style="height:30ex;overflow:scroll">
+                     {% for b in brand %}
+                         <li><a href="#">{{ b.brand }}</a></li>
+                     {% endfor %}
                  </ul>
             </div>
 
