@@ -7,89 +7,74 @@ from commentcrawler.items import *
 import MySQLdb
 
 class TmallSpider(scrapy.Spider):
-    name = "Tmall"
+    name = "tm"
     pages = 0
     maxpage = 10
     allowed_domains = ["tmall.com"]
 
-    start_urls = {
-        # 'phone':"https://list.tmall.com/search_product.htm?spm=a220m.1000858.0.0.muAm62&cat=50024400&q=%CA%D6%BB%FA&sort=s&style=g&search_condition=7&from=sn_1_rightnav&industryCatId=50024400#J_crumbs",
-        # 'laptop':"https://list.tmall.com/search_product.htm?spm=875.7931836/A.subpannel2016040.22.RAIxE6&cat=50024399&acm=2016031437.1003.2.720502&aldid=0XR95i8Y&theme=663&scm=1003.2.2016031437.OTHER_1458241115467_720502&pos=1",
-        # 'refrigerator':"https://list.tmall.com/search_product.htm?spm=a222t.7794920.fsnav.1.mpZFxJ&cat=50918004&acm=lb-zebra-24139-328537.1003.8.455785&scm=1003.8.lb-zebra-24139-328537.ITEM_14458832193540_455785",
-        # 'novel':'https://list.tmall.com/search_product.htm?spm=a223b.7742558.8309007222.12.W59Byp&cat=50021926&sort=s&acm=lb-zebra-7852-323689.1003.8.450706&style=g&from=sn_1_cat&scm=1003.8.lb-zebra-7852-323689.ITEM_14432252898171_450706&tmhkmain=0#J_crumbs',
-        # 'm_clothes':"https://list.tmall.com/search_product.htm?spm=a221t.1710963.8073444875.12.vdFreu&cat=50074112&shopType=any&sort=s&style=g&acm=lb-zebra-7499-292762.1003.8.427962&search_condition=23&promo=43906&industryCatId=50026245&active=1&from=sn_1_rightnav&scm=1003.8.lb-zebra-7499-292762.ITEM_14417598541394_427962",
-        # 'purse':"https://list.tmall.com/search_product.htm?spm=875.7931836/A.subpannel2016031.45.PU2DBq&abbucket=&cat=55752015&sort=s&acm=201603102.1003.2.718817&aldid=4zud7MVQ&from=sn_1_cat&pos=3&style=g&search_condition=23&industryCatId=55722012&abtest=&scm=1003.2.201603102.OTHER_1465575214063_718817&tmhkmain=0#J_crumbs",
-        # 'snacks':"https://list.tmall.com/search_product.htm?spm=875.7931836/A.subpannel2016046.14.PU2DBq&acm=2016030721.1003.64.709543&q=%C1%E3%CA%B3&vmarket=&aldid=oWkQTa94&from=mallfp..pc_1_searchbutton&type=p&scm=1003.64.2016030721.OTHER_1456794819190_709543&pos=1",
-        # 'm_shoes':"https://list.tmall.com/search_product.htm?spm=875.7931836/A.subpannel2016031.27.PU2DBq&cat=53406005&sort=s&style=g&acm=201603076.1003.2.708919&search_condition=7&aldid=4zud7MVQ&theme=713&industryCatId=50076895&active=1&from=sn_1_cat&smAreaId=330100&scm=1003.2.201603076.OTHER_1467379424209_708919&pos=1",
-        # 'w_shoes':"https://list.tmall.com/search_product.htm?spm=875.7931836/A.subpannel2016031.11.PU2DBq&new=1&cat=50036330&acm=201603075.1003.2.708912&search_condition=71&aldid=4zud7MVQ&theme=714&scm=1003.2.201603075.OTHER_1467006793803_708912&pos=1",
-        # 'w_clothes':"https://list.tmall.com/search_product.htm?spm=875.7931836/A.subpannel2016025.2.PU2DBq&cat=50025135&sort=s&style=g&acm=2016031463.1003.2.718839&aldid=4bLwqBrw&oq=%C5%AE%D7%B0&prop=122216347:854168429&from=sn_1_prop&scm=1003.2.2016031463.OTHER_1471742023942_718839&tmhkmain=0&pos=2#J_crumbs"
+    start = []
+    cookies ={
+        'x': '__ll%3D-1%26_ato%3D0',
+        '_med': 'dw:1366&dh:768&pw:1366&ph:768&ist:0',
+        'tk_trace': '1',
+         '_tb_token_': 'Ur4N5kpuIRQY',
+         'uc1': 'cookie15=URm48syIIVrSKA%3D%3D&existShop=false',
+         'uc3': 'nk2=gKRAFy4%3D&id2=VWolk1ZEqVZ%2B&vt3=F8dARVKyod1F26sWbEE%3D&lg2=V32FPkk%2Fw0dUvg%3D%3D',
+         'uss': 'V3%2BObjrWeiX%2FdUgjAhJ0EucHdfYLVdOtNip8w7Rz%2F9aJW%2Fo4VUEvCKRH',
+         'lgc': '%5Cu95EB%5Cu660A1',
+         'tracknick': '%5Cu95EB%5Cu660A1',
+         'cookie2': 'bd8f5e9f59f4ca765adb7397bf603adc',
+         'cookie1': 'VT5QjUKltzGCqDfj4XDJYpfk9QXHK0W6saPIVZCKXOc%3D',
+         'unb': '654811527',
+         'skt': 'ecf9e6180d8e77bd',# a
+         't': 'ef41b0fbd876a14021126e8df1aa9cdb',
+         '_l_g_': 'Ug%3D%3D',
+         '_nk_': '%5Cu95EB%5Cu660A1',
+         'cookie17': 'VWolk1ZEqVZ%2B',
+         'login': 'true',
+         'tt': 'login.tmall.com',
+         'cna': 'EFurEFJmHUECAdvv49S5egNZ',
+         'pnm_cku822': '215UW5TcyMNYQwiAiwQRHhBfEF8QXtHcklnMWc%3D%7CUm5Ockt%2FQHVOdUtySnJJdCI%3D%7CU2xMHDJ7G2AHYg8hAS8XLQMjDVEwVjpdI1l3IXc%3D%7CVGhXd1llXGhXYlliXGVdZV5jVGlLdExwT3RLd0pwTXFMcER%2BSmQy%7CVWldfS0TMwgxCioWLQ0jGCwJLF4hSDMffw4%2BGidWaEYQRg%3D%3D%7CVmhIGCUFOBgkGiMXNw86DjAQLBIpEjIIMwYmGiQfJAQ%2BATRiNA%3D%3D%7CV25Tbk5zU2xMcEl1VWtTaUlwJg%3D%3D',
+         'res': 'scroll%3A1349*5893-client%3A1349*662-offset%3A1349*5893-screen%3A1366*768',
+         'cq': 'ccp%3D0',
+         'otherx': 'e%3D1%26p%3D*%26s%3D0%26c%3D0%26f%3D0%26g%3D0%26t%3D0',
+         'swfstore': '266533',
+         'whl': '-1%260%260%260',
+         'l':'AtjYez6b-cpIeHR7yXsM-CxqKAxqMDxL',# a
+         'isg':'AlVVgPZnoW8ZF4UTChjNXG3sZFF28glk50Lmetf6EUwbLnUgn6IZNGPsjoVi'# a
     }
-    # cookies ={
-    #     'x': '__ll%3D-1%26_ato%3D0',
-    #     '_med': 'dw:1366&dh:768&pw:1366&ph:768&ist:0',
-    #     'tk_trace': '1',
-    #      '_tb_token_': 'Ur4N5kpuIRQY',
-    #      'uc1': 'cookie15=URm48syIIVrSKA%3D%3D&existShop=false',
-    #      'uc3': 'nk2=gKRAFy4%3D&id2=VWolk1ZEqVZ%2B&vt3=F8dARVKyod1F26sWbEE%3D&lg2=V32FPkk%2Fw0dUvg%3D%3D',
-    #      'uss': 'V3%2BObjrWeiX%2FdUgjAhJ0EucHdfYLVdOtNip8w7Rz%2F9aJW%2Fo4VUEvCKRH',
-    #      'lgc': '%5Cu95EB%5Cu660A1',
-    #      'tracknick': '%5Cu95EB%5Cu660A1',
-    #      'cookie2': 'bd8f5e9f59f4ca765adb7397bf603adc',
-    #      'cookie1': 'VT5QjUKltzGCqDfj4XDJYpfk9QXHK0W6saPIVZCKXOc%3D',
-    #      'unb': '654811527',
-    #      'skt': 'ecf9e6180d8e77bd',# a
-    #      't': 'ef41b0fbd876a14021126e8df1aa9cdb',
-    #      '_l_g_': 'Ug%3D%3D',
-    #      '_nk_': '%5Cu95EB%5Cu660A1',
-    #      'cookie17': 'VWolk1ZEqVZ%2B',
-    #      'login': 'true',
-    #      'tt': 'login.tmall.com',
-    #      'cna': 'EFurEFJmHUECAdvv49S5egNZ',
-    #      'pnm_cku822': '215UW5TcyMNYQwiAiwQRHhBfEF8QXtHcklnMWc%3D%7CUm5Ockt%2FQHVOdUtySnJJdCI%3D%7CU2xMHDJ7G2AHYg8hAS8XLQMjDVEwVjpdI1l3IXc%3D%7CVGhXd1llXGhXYlliXGVdZV5jVGlLdExwT3RLd0pwTXFMcER%2BSmQy%7CVWldfS0TMwgxCioWLQ0jGCwJLF4hSDMffw4%2BGidWaEYQRg%3D%3D%7CVmhIGCUFOBgkGiMXNw86DjAQLBIpEjIIMwYmGiQfJAQ%2BATRiNA%3D%3D%7CV25Tbk5zU2xMcEl1VWtTaUlwJg%3D%3D',
-    #      'res': 'scroll%3A1349*5893-client%3A1349*662-offset%3A1349*5893-screen%3A1366*768',
-    #      'cq': 'ccp%3D0',
-    #      'otherx': 'e%3D1%26p%3D*%26s%3D0%26c%3D0%26f%3D0%26g%3D0%26t%3D0',
-    #      'swfstore': '266533',
-    #      'whl': '-1%260%260%260',
-    #      'l':'AtjYez6b-cpIeHR7yXsM-CxqKAxqMDxL',# a
-    #      'isg':'AlVVgPZnoW8ZF4UTChjNXG3sZFF28glk50Lmetf6EUwbLnUgn6IZNGPsjoVi'# a
+
+    # cookies = {
+    #     'cna': 'MgGQDlZ+nHsCAWonKbYoFjaM',
+    #     '_med': 'dw:1440&dh:900&pw:1440&ph:900&ist:0',
+    #     't': '265651046d436fb6c5a7a398e4d65a4c',
+    #     '_tb_token_': 'oIA8dqMGpOuU',
+    #     'cookie2': '1abd1988561b207bbffbc860ebcbeb2f',
+    #     'pnm_cku822': '075UW5TcyMNYQwiAiwQRHhBfEF8QXtHcklnMWc%3D%7CUm5OcktwRX5FeEF5THNNciQ%3D%7CU2xMHDJ7G2AHYg8hAS8WIgwsAl4%2FWTVSLFZ4Lng%3D%7CVGhXd1llXGdSaVJvVm5bZFplUm9NdEl3SXdPc0l9RXhEcUR9R2k%2F%7CVWldfS0TMwY4BycSMhwkFHMIWDVfe1UDVQ%3D%3D%7CVmhIGCUFOQc8BycbIh0jAzgFPAIiHiceIwM3CjcXKxIrFjYDOAVTBQ%3D%3D%7CV25Tbk5zU2xMcEl1VWtTaUlwJg%3D%3D',
+    #     'res': 'scroll%3A1423*6043-client%3A1423*799-offset%3A1423*6043-screen%3A1440*900',
+    #     'cq': 'ccp%3D1',
+    #     'l': 'AoCAedPj4WQcxKerV6ErAiSI0ARSCWTT',
+    #     'isg': 'AikpBI00WtENd2aQhdgdXB8vONXKrB0oyAa8HMsepZBPkkmkE0Yt-BeAIoFe'
     # }
 
-    cookies = {
-        'cna': 'MgGQDlZ+nHsCAWonKbYoFjaM',
-        '_med': 'dw:1440&dh:900&pw:1440&ph:900&ist:0',
-        't': '265651046d436fb6c5a7a398e4d65a4c',
-        '_tb_token_': 'oIA8dqMGpOuU',
-        'cookie2': '1abd1988561b207bbffbc860ebcbeb2f',
-        'pnm_cku822': '075UW5TcyMNYQwiAiwQRHhBfEF8QXtHcklnMWc%3D%7CUm5OcktwRX5FeEF5THNNciQ%3D%7CU2xMHDJ7G2AHYg8hAS8WIgwsAl4%2FWTVSLFZ4Lng%3D%7CVGhXd1llXGdSaVJvVm5bZFplUm9NdEl3SXdPc0l9RXhEcUR9R2k%2F%7CVWldfS0TMwY4BycSMhwkFHMIWDVfe1UDVQ%3D%3D%7CVmhIGCUFOQc8BycbIh0jAzgFPAIiHiceIwM3CjcXKxIrFjYDOAVTBQ%3D%3D%7CV25Tbk5zU2xMcEl1VWtTaUlwJg%3D%3D',
-        'res': 'scroll%3A1423*6043-client%3A1423*799-offset%3A1423*6043-screen%3A1440*900',
-        'cq': 'ccp%3D1',
-        'l': 'AoCAedPj4WQcxKerV6ErAiSI0ARSCWTT',
-        'isg': 'AikpBI00WtENd2aQhdgdXB8vONXKrB0oyAa8HMsepZBPkkmkE0Yt-BeAIoFe'
-    }
-
-    def __init__(self, cat=None, brand=None, **kwargs):
+    def __init__(self, m_id=None, **kwargs):
         super(TmallSpider, self).__init__(**kwargs)
-        if cat is not None:
-            items = []
-            db = MySQLdb.connect("127.0.0.1", "root", "", "gp_web")
-            c = db.cursor()
-            if brand == 'all':
-                c.execute("select brand, url from web_url where platform = 'tm' and category = '%s'" % cat)
-                for i in c.fetchall():
-                    items.append({'brand': i[0], 'url': i[1]})
-            else:
-                c.execute("select url from web_url where platform = 'tm' and category = '%s' and brand = '%s'"
-                          % (cat, brand))
-                i = c.fetchone()
-                items.append({'brand': brand, 'url': i[0]})
-            db.close()
-            self.start_urls = {'cat': cat, 'items': items}
+        db = MySQLdb.connect("127.0.0.1", "root", "", "gp_web")
+        c = db.cursor()
+        if m_id is not None:
+            c.execute("select category, brand, url from web_url where platform = 'tm' and id = %s" % m_id)
+            i = c.fetchone()
+            self.start.append({'cat': i[0], 'brand': i[1], 'url': i[2]})
+        else:
+            c.execute("select category, brand, url from web_url where platform = 'tm'")
+            for i in c.fetchall():
+                self.start.append({'cat': i[0], 'brand': i[1], 'url': i[2]})
+        db.close()
 
     def start_requests(self):
-        for item in self.start_urls['items']:
-            yield scrapy.Request(item['url'], cookies=self.cookies, callback=self.parse,
-                                 meta={'cat': self.start_urls['cat'], 'brand': item['brand']})
+        for item in self.start:
+            yield scrapy.Request(item['url'], callback=self.parse, cookies=self.cookies,
+                                 meta={'cat': item['cat'], 'page': 1, 'brand': item['brand']})
 
     def parse(self, response):
         sel = scrapy.Selector(response)

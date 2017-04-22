@@ -8,6 +8,7 @@ from django.shortcuts import render
 from sentiment_analysor import sentiment
 from django.core import serializers
 from models import *
+import os
 
 
 def crawler(request):
@@ -56,9 +57,13 @@ def get_brand_by_cat(request):
     brand = Url.objects.filter(platform=platform, category=category)
     return HttpResponse(serializers.serialize("json", brand))
 
+
 def crawl_comment(request):
     data = request.GET
     platform = NameKey.objects.get(name=data['platform']).key
     category = NameKey.objects.get(name=data['cat']).key
-    brand_url = Url.objects.get(category=category, platform=platform, brand=data['brand'])
-
+    brand = data['brand']
+    brand_id = Url.objects.get(platform=platform, category=category, brand=brand).id
+    command = "run_crawler.bat %s %d" % (platform, brand_id)
+    os.system(command)
+    return HttpResponse(json.dumps({"command": command}))

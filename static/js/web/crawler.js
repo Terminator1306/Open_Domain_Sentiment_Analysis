@@ -57,8 +57,28 @@ function init_platform_click() {
     $(".platform").first().click()
 }
 
+function init_confirm_click() {
+    $("#confirm").click(function () {
+        $(this).text("采集中");
+        $(this).attr("disabled", true);
+        var platform = $("#show_platform").text(),
+            brand = $("#show_brand").text(),
+            cat = $("#show_cat").text();
+        $.getJSON("../crawl_comment",{'platform':platform, 'cat':cat, 'brand':brand},function (data) {
+            $("#confirm").hide();
+            $("#compute").show();
+        })
+    })
+}
+
+function init_download_click() {
+
+}
+
 function init_click() {
     init_brand_click();
     init_cat_click();
     init_platform_click();
+    init_confirm_click();
+    init_download_click();
 }

@@ -26,7 +26,7 @@ class Comment(models.Model):
     creationTime = models.CharField(max_length=254, default='')
     content = models.TextField()
     attribute = models.TextField()
-    sentiment = models.TextField(default='')
+    sentiment = models.TextField(null=True)
 
     class Meta:
         unique_together = ("product_id", "comment_id")
@@ -36,7 +36,7 @@ class Url(models.Model):
     category = models.CharField(max_length=255,default='')
     brand = models.CharField(max_length=255, default='')
     platform = models.CharField(max_length=255, default='')
-    url = models.CharField(max_length=255, primary_key=True)
+    url = models.CharField(max_length=255, unique=True)
 
 
 class NameKey(models.Model):

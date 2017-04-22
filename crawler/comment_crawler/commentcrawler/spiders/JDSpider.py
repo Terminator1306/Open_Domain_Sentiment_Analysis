@@ -11,36 +11,28 @@ import MySQLdb
 
 
 class JDSpider(scrapy.Spider):
-    name = "JD_SJ"
+    name = "jd"
     allowed_domains = ["jd.com", "3.cn", "jd.hk"]
-    start_urls = {
-        # "http://list.jd.com/list.html?cat=652,654,831",
-        # "http://list.jd.com/list.html?cat=670,671,672"
-    }
+    start = []
 
-    def __init__(self, cat=None, brand=None, **kwargs):
+    def __init__(self, m_id=None, **kwargs):
         super(JDSpider, self).__init__(**kwargs)
-        print cat
-        if cat is not None:
-            items = []
-            db = MySQLdb.connect("127.0.0.1", "root", "", "gp_web")
-            c = db.cursor()
-            if brand == 'all':
-                c.execute("select brand, url from web_url where platform = 'jd' and category = '%s'" % cat)
-                for i in c.fetchall():
-                    items.append({'brand': i[0], 'url': i[1]})
-            else:
-                c.execute("select url from web_url where platform = 'jd' and category = '%s' and brand = '%s'"
-                          % (cat, brand))
-                i = c.fetchone()
-                items.append({'brand': brand, 'url': i[0]})
-            db.close()
-            self.start_urls = {'cat': cat, 'items': items}
+        db = MySQLdb.connect("127.0.0.1", "root", "", "gp_web")
+        c = db.cursor()
+        if m_id is not None:
+            c.execute("select category, brand, url from web_url where platform = 'jd' and id = %s" % m_id)
+            i = c.fetchone()
+            self.start.append({'cat': i[0], 'brand': i[1], 'url': i[2]})
+        else:
+            c.execute("select category, brand, url from web_url where platform = 'jd'")
+            for i in c.fetchall():
+                self.start.append({'cat': i[0], 'brand': i[1], 'url': i[2]})
+        db.close()
 
     def start_requests(self):
-        for item in self.start_urls['items']:
+        for item in self.start:
             yield scrapy.Request(item['url'], callback=self.parse,
-                                 meta={'cat': self.start_urls['cat'], 'page': 1, 'brand': item['brand']})
+                                 meta={'cat': item['cat'], 'page': 1, 'brand': item['brand']})
 
     def parse(self, response):
         sel = scrapy.Selector(response)
