@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block include_js %}
+    <script type="text/javascript" src="{% static 'js/web/crawler.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/doT.min.js' %}"></script>
+{% endblock %}
+{% block body_before_js %}
+    <script type="text/javascript">
+        $().ready(function () {
+            init_click();
+        })
+    </script>
+{% endblock %}
 {% block title %} 数据采集 {% endblock %}
 {% block content %}
     <div class="panel-primary">
@@ -14,14 +25,14 @@
                 电商平台
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default">{{ platform.1.name }}</button>
+                <button type="button" class="btn btn-default" id="show_platform"></button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     {% for p in platform %}
-                        <li><a href="#">{{ p.name }}</a></li>
+                        <li class="platform"><a>{{ p.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -30,14 +41,14 @@
                 商品类型
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default">{{ category.1.name }}</button>
+                <button type="button" class="btn btn-default" id="show_cat"></button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     {% for c in category %}
-                        <li><a href="#">{{ c.name }}</a></li>
+                        <li class="cat"><a href="#">{{ c.name }}</a> </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -46,14 +57,14 @@
                 品牌
             </div>
             <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default">{{ brand.0.brand }}</button>
+                 <button type="button" class="btn btn-default" id="show_brand"></button>
                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                      <span class="caret"></span>
                      <span class="sr-only">切换下拉菜单</span>
                  </button>
-                 <ul class="dropdown-menu" role="menu" style="height:30ex;overflow:scroll">
+                 <ul class="dropdown-menu" role="menu" id="brand_ul" style="height:30ex;overflow:scroll">
                      {% for b in brand %}
-                         <li><a href="#">{{ b.brand }}</a></li>
+                         <li class="brand"><a href="#" >{{ b.brand }}</a></li>
                      {% endfor %}
                  </ul>
             </div>

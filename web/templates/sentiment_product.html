@@ -1,21 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block include_js %}
+    <script type="text/javascript" src="{% static 'js/doT.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/web/sentiment_product.js' %}"></script>
 {% endblock %}
 {% block body_before_js %}
     <script type="text/javascript">
-        function set_brand(cat) {
-{#            $.getJSON("{% url '' %}",{"cat":cat},function () {#}
-{##}
-{#            })#}
-        }
-
         $().ready(function () {
-            $(".cat").each(function () {
-                $(this).click(function () {
-                    $("#show_cat").text($(this).text())
-                })
-            })
+            init_click();
         })
     </script>
 {% endblock %}
@@ -30,7 +22,7 @@
                 电商平台
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default" id="show_platform">{{ platform.0.name }}</button>
+                <button type="button" class="btn btn-default" id="show_platform"></button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
@@ -46,7 +38,7 @@
                 商品类型
             </div>
             <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default" id="show_cat">{{ category.0.name }}</button>
+                <button type="button" class="btn btn-default" id="show_cat"></button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">切换下拉菜单</span>
@@ -62,14 +54,14 @@
                 品牌
             </div>
             <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default" id="show_brand">{{ brand.0.brand }}</button>
+                 <button type="button" class="btn btn-default" id="show_brand"></button>
                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                      <span class="caret"></span>
                      <span class="sr-only">切换下拉菜单</span>
                  </button>
-                 <ul class="dropdown-menu" role="menu"  style="height:30ex;overflow:scroll">
+                 <ul class="dropdown-menu" role="menu" id="brand_ul" style="height:30ex;overflow:scroll">
                      {% for b in brand %}
-                         <li><a href="#" >{{ b.brand }}</a></li>
+                         <li class="brand"><a href="#" >{{ b.brand }}</a></li>
                      {% endfor %}
                  </ul>
             </div>

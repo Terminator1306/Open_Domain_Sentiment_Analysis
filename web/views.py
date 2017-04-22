@@ -6,14 +6,15 @@ from django.http import HttpResponse
 
 from django.shortcuts import render
 from sentiment_analysor import sentiment
+from django.core import serializers
 from models import *
 
 
 def crawler(request):
     category = NameKey.objects.values("name").filter(type='category').order_by("id")
     platform = NameKey.objects.values("name").filter(type='platform').order_by("id")
-    brand = Url.objects.filter(platform='tm', category='phone').order_by("id")
-    return render(request, "crawler.html", {"brand": brand, "category": category, "platform": platform})
+    brand = Url.objects.filter(platform='tm', category='phone')
+    return render(request, "crawler.html", locals())
 
 
 def home(request):
@@ -50,6 +51,14 @@ def compute_sentiment_comment(request):
 
 def get_brand_by_cat(request):
     data = request.GET
-    brand = Url.objects.filter(platform=NameKey.objects.get(name=data.platform),
-                               category=NameKey.objects.get(name=data.cat))
-    return HttpResponse(json.dumps(brand))
+    platform = NameKey.objects.get(name=data['platform']).key
+    category = NameKey.objects.get(name=data['cat']).key
+    brand = Url.objects.filter(platform=platform, category=category)
+    return HttpResponse(serializers.serialize("json", brand))
+
+def crawl_comment(request):
+    data = request.GET
+    platform = NameKey.objects.get(name=data['platform']).key
+    category = NameKey.objects.get(name=data['cat']).key
+    brand_url = Url.objects.get(category=category, platform=platform, brand=data['brand'])
+

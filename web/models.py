@@ -9,6 +9,7 @@ from django.db import models
 class Product(models.Model):
     product_id = models.CharField(max_length=254, primary_key=True)
     comment_count = models.CharField(max_length=254, default='')
+    url = models.TextField(default='')
     brand = models.CharField(max_length=254, default='')
     model = models.CharField(max_length=254, default='')
     price = models.CharField(max_length=254, default='')
@@ -19,14 +20,13 @@ class Product(models.Model):
 
 
 class Comment(models.Model):
-    product_id = models.ForeignKey(Product)
+    product_id = models.CharField(max_length=255, default='')
     comment_id = models.CharField(max_length=254)
     referenceName = models.CharField(max_length=254, default='')
     creationTime = models.CharField(max_length=254, default='')
     content = models.TextField()
     attribute = models.TextField()
-    good_aspect = models.TextField(default='')
-    bad_aspect = models.TextField(default='')
+    sentiment = models.TextField(default='')
 
     class Meta:
         unique_together = ("product_id", "comment_id")

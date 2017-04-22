@@ -11,6 +11,7 @@ import scrapy
 class Product(scrapy.Item):
     item_type = scrapy.Field()
     product_id = scrapy.Field()
+    url = scrapy.Field()
     comment_count = scrapy.Field()
     brand = scrapy.Field()
     model = scrapy.Field()
@@ -28,12 +29,6 @@ class Comment(scrapy.Item):
     comment_id = scrapy.Field()
     referenceName = scrapy.Field()
     creationTime = scrapy.Field()
-    # userlevel = scrapy.Field()
-    # usefulVoteCount = scrapy.Field()
-    # uselessVoteCount =scrapy.Field()
-    # userProvince = scrapy.Field()
-    # score = scrapy.Field()
-    # userRegisterTime = scrapy.Field()
     attribute = scrapy.Field()
 
 

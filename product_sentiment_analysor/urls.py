@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^sentiment_comment/$', views.sentiment_comment, name='sentiment_comment'),
     url(r'^sentiment_brand/$', views.sentiment_brand, name='sentiment_brand'),
     url(r'^sentiment_comment/compute/comment/$', views.compute_sentiment_comment, name='compute_comment'),
-    url(r'^$', views.home, name='home')
+    url(r'^$', views.home, name='home'),
+    url(r'^get_brand/$', views.get_brand_by_cat, name="get_brand")
 ]

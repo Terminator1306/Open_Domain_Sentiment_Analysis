@@ -337,7 +337,8 @@ def compute_sentiment(text):
 def main():
     sentence = []
     result = []
-    cursor = dbconnect.connect()
+    db = dbconnect.connect()
+    cursor = db.cursor()
     p = 'TM_538921269672'
     cursor.execute(
         "select comment.content from product,comment where comment.product_id = product.product_id and product.product_id = '%s'" %
@@ -366,6 +367,7 @@ def main():
                 else:
                     senti_dict[f] = [value]
 
+    db.close()
     f = open('../output/sentiment/product_general.txt', 'a')
     f.truncate()
     for key, value in senti_dict.iteritems():

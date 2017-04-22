@@ -2,7 +2,8 @@ import dbconnect
 
 
 def main():
-    c = dbconnect.connect()
+    db = dbconnect.connect()
+    c = db.cursor()
     c.execute("select id, good, bad, summary, user, helpless from pos_neg1")
     for i in c.fetchall():
         id = i[0]
@@ -19,5 +20,6 @@ def main():
             c.execute(sql)
         except Exception, e:
             print sql
+    db.close()
 
 main()

@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gp_web',
         'USER':'root',
-        'PASSWORD':'12345',
+        'PASSWORD': '',
     }
 
 }
