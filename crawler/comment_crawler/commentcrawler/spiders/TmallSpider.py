@@ -55,18 +55,18 @@ class TmallSpider(scrapy.Spider):
     #      'isg':'AlVVgPZnoW8ZF4UTChjNXG3sZFF28glk50Lmetf6EUwbLnUgn6IZNGPsjoVi'# a
     # }
 
-    # cookies = {
-    #     'cna': 'MgGQDlZ+nHsCAWonKbYoFjaM',
-    #     '_med': 'dw:1440&dh:900&pw:1440&ph:900&ist:0',
-    #     't': '265651046d436fb6c5a7a398e4d65a4c',
-    #     '_tb_token_': 'oIA8dqMGpOuU',
-    #     'cookie2': '1abd1988561b207bbffbc860ebcbeb2f',
-    #     'pnm_cku822': '075UW5TcyMNYQwiAiwQRHhBfEF8QXtHcklnMWc%3D%7CUm5OcktwRX5FeEF5THNNciQ%3D%7CU2xMHDJ7G2AHYg8hAS8WIgwsAl4%2FWTVSLFZ4Lng%3D%7CVGhXd1llXGdSaVJvVm5bZFplUm9NdEl3SXdPc0l9RXhEcUR9R2k%2F%7CVWldfS0TMwY4BycSMhwkFHMIWDVfe1UDVQ%3D%3D%7CVmhIGCUFOQc8BycbIh0jAzgFPAIiHiceIwM3CjcXKxIrFjYDOAVTBQ%3D%3D%7CV25Tbk5zU2xMcEl1VWtTaUlwJg%3D%3D',
-    #     'res': 'scroll%3A1423*6043-client%3A1423*799-offset%3A1423*6043-screen%3A1440*900',
-    #     'cq': 'ccp%3D1',
-    #     'l': 'AoCAedPj4WQcxKerV6ErAiSI0ARSCWTT',
-    #     'isg': 'AikpBI00WtENd2aQhdgdXB8vONXKrB0oyAa8HMsepZBPkkmkE0Yt-BeAIoFe'
-    # }
+    cookies = {
+        'cna': 'MgGQDlZ+nHsCAWonKbYoFjaM',
+        '_med': 'dw:1440&dh:900&pw:1440&ph:900&ist:0',
+        't': '265651046d436fb6c5a7a398e4d65a4c',
+        '_tb_token_': 'oIA8dqMGpOuU',
+        'cookie2': '1abd1988561b207bbffbc860ebcbeb2f',
+        'pnm_cku822': '075UW5TcyMNYQwiAiwQRHhBfEF8QXtHcklnMWc%3D%7CUm5OcktwRX5FeEF5THNNciQ%3D%7CU2xMHDJ7G2AHYg8hAS8WIgwsAl4%2FWTVSLFZ4Lng%3D%7CVGhXd1llXGdSaVJvVm5bZFplUm9NdEl3SXdPc0l9RXhEcUR9R2k%2F%7CVWldfS0TMwY4BycSMhwkFHMIWDVfe1UDVQ%3D%3D%7CVmhIGCUFOQc8BycbIh0jAzgFPAIiHiceIwM3CjcXKxIrFjYDOAVTBQ%3D%3D%7CV25Tbk5zU2xMcEl1VWtTaUlwJg%3D%3D',
+        'res': 'scroll%3A1423*6043-client%3A1423*799-offset%3A1423*6043-screen%3A1440*900',
+        'cq': 'ccp%3D1',
+        'l': 'AoCAedPj4WQcxKerV6ErAiSI0ARSCWTT',
+        'isg': 'AikpBI00WtENd2aQhdgdXB8vONXKrB0oyAa8HMsepZBPkkmkE0Yt-BeAIoFe'
+    }
 
     def __init__(self, cat=None, brand=None, **kwargs):
         super(TmallSpider, self).__init__(**kwargs)
@@ -135,8 +135,6 @@ class TmallSpider(scrapy.Spider):
     def CommentTagParse(self, response):
         sel = scrapy.Selector(response)
         body = '{' + sel.xpath("//body//text()").extract()[0] + "}"
-        # with open("result.txt",'w') as f:
-        #     f.write(body)
         mjson = json.loads(body)
         commentTag = {}
         for tag in mjson['tags']['tagClouds']:
