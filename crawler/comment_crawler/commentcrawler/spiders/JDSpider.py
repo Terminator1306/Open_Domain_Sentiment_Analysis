@@ -19,6 +19,7 @@ class JDSpider(scrapy.Spider):
         super(JDSpider, self).__init__(**kwargs)
         db = MySQLdb.connect("127.0.0.1", "root", "", "gp_web")
         c = db.cursor()
+        c.execute("set names utf8")
         if m_id is not None:
             c.execute("select category, brand, url from web_url where platform = 'jd' and id = %s" % m_id)
             i = c.fetchone()
@@ -141,7 +142,7 @@ class JDSpider(scrapy.Spider):
         product_id = "JD_" + response.meta['product_id']
 
         product = Product()
-        product['category'] = 'laptop'
+        product['category'] = response.meta['cat']
         product['item_type'] = 'product'
         product['product_id'] = product_id
         product['brand'] = response.meta['brand']

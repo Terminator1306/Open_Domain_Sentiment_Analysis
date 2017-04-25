@@ -18,7 +18,8 @@
             <h3 class="panel-title">情感计算 产品</h3>
         </div>
         <div class="panel-body">
-             <div class="col-sm-2">
+
+<div class="col-sm-2">
                 电商平台
             </div>
             <div class="col-sm-10 btn-group">
@@ -65,19 +66,18 @@
                      {% endfor %}
                  </ul>
             </div>
-
             <div class="col-sm-2">
                 产品
             </div>
             <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default" id="show_product">XT1650-05 Moto Z 标准版</button>
+                 <button type="button" class="btn btn-default" id="show_product"></button>
                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                      <span class="caret"></span>
                      <span class="sr-only">切换下拉菜单</span>
                  </button>
-                 <ul class="dropdown-menu" role="menu">
-                     <li><a href="#">小米</a></li>
-                     <li><a href="#">苹果</a></li>
+                 <ul class="dropdown-menu" id="product_ul" role="menu" style="height:30ex;overflow:scroll">
+                     <li class="product"><a href="#">小米</a></li>
+                     <li class="product"><a href="#">苹果</a></li>
                  </ul>
             </div>
             <button class="btn btn-primary">确定</button>

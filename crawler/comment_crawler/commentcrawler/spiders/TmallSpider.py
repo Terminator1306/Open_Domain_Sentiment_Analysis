@@ -61,6 +61,7 @@ class TmallSpider(scrapy.Spider):
         super(TmallSpider, self).__init__(**kwargs)
         db = MySQLdb.connect("127.0.0.1", "root", "", "gp_web")
         c = db.cursor()
+        c.execute("set names utf8")
         if m_id is not None:
             c.execute("select category, brand, url from web_url where platform = 'tm' and id = %s" % m_id)
             i = c.fetchone()
@@ -81,7 +82,6 @@ class TmallSpider(scrapy.Spider):
         items = sel.xpath('//div[@class="product  "]')
         next_page = sel.xpath('//a[@class="ui-page-next"]/@href').extract()
         self.pages += 1
-        # print len(items)
         for item in items:
             # item = items[0]
             product_id = "TM_" + item.xpath("@data-id").extract()[0]
@@ -148,8 +148,6 @@ class TmallSpider(scrapy.Spider):
         brand = html_parser.unescape(brand)
         if len(brand) > 100:
             brand = ""
-        # with open("brand.txt","a") as f:
-        #     f.write(brand+"\n")
         name = sel.xpath("//meta[@name='keywords']/@content").extract()[0]
         if len(detail) > 0:
             keys = detail.xpath("./tr[not(@class)]/th/text()").extract()
@@ -173,7 +171,7 @@ class TmallSpider(scrapy.Spider):
 
         yield product
 
-        limit = 20
+        limit = 150
         pages = int(response.meta['comment_count']) / 20 + 1
         if pages > limit:
             pages = limit

@@ -65,8 +65,8 @@ function init_confirm_click() {
             brand = $("#show_brand").text(),
             cat = $("#show_cat").text();
         $.getJSON("../crawl_comment",{'platform':platform, 'cat':cat, 'brand':brand},function (data) {
-            $("#confirm").hide();
-            $("#compute").show();
+            $(this).text("确定");
+            $(this).attr("disabled", false);
         })
     })
 }

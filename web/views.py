@@ -10,6 +10,8 @@ from django.core import serializers
 from models import *
 import os
 
+logger = logging.getLogger('mylogger')
+
 
 def crawler(request):
     category = NameKey.objects.values("name").filter(type='category').order_by("id")
@@ -50,7 +52,7 @@ def compute_sentiment_comment(request):
     return HttpResponse(json.dumps(result))
 
 
-def get_brand_by_cat(request):
+def get_brand_list(request):
     data = request.GET
     platform = NameKey.objects.get(name=data['platform']).key
     category = NameKey.objects.get(name=data['cat']).key
@@ -67,3 +69,12 @@ def crawl_comment(request):
     command = "run_crawler.bat %s %d" % (platform, brand_id)
     os.system(command)
     return HttpResponse(json.dumps({"command": command}))
+
+
+def get_product_list(request):
+    data = request.GET
+    platform = NameKey.objects.get(name=data['platform']).key
+    category = NameKey.objects.get(name=data['cat']).key
+    products = Product.objects.filter(category=category, brand=data['brand'], product_id__startswith=platform.upper())
+    return HttpResponse(serializers.serialize("json", products))
+

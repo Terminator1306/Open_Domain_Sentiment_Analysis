@@ -17,6 +17,10 @@ from twisted.enterprise import adbapi
 from scrapy.conf import settings
 from scrapy.exceptions import DropItem
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 class Pipeline(object):
  
     def __init__(self):
@@ -64,6 +68,7 @@ class Pipeline(object):
 
 
     def _conditional_insert(self, tx, item):
+
         if item['item_type'] == 'comment':
             sql = "insert into web_comment (product_id, comment_id, referenceName, creationTime, content, attribute) values ('%s', '%s', '%s', '%s', '%s','%s')"%(item['product_id'],
                 item['comment_id'],item['referenceName'],item['creationTime'], item['content'], json.dumps(item['attribute'],ensure_ascii=False))
