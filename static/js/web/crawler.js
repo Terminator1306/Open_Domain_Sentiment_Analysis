@@ -67,12 +67,20 @@ function init_confirm_click() {
         $.getJSON("../crawl_comment",{'platform':platform, 'cat':cat, 'brand':brand},function (data) {
             $("#confirm").text("确定");
             $("#confirm").attr("disabled", false);
+            alert(data['output_file']);
         })
     })
 }
 
 function init_download_click() {
-
+    $("#download").click(function () {
+        var platform = $("#show_platform").text(),
+            brand = $("#show_brand").text(),
+            cat = $("#show_cat").text();
+        $.get("../download_comment/",{"platform":platform,"brand":brand,'cat':cat},function () {
+            alert("success");
+        });
+    });
 }
 
 function init_click() {
