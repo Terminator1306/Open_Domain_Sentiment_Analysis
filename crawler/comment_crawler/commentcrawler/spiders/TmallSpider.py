@@ -220,10 +220,10 @@ class TmallSpider(scrapy.Spider):
                 yield comment
         except Exception, e:
             print str(e)
-            with open("error.txt", "a") as f:
-                f.write(str(e) + '\n')
-                f.write(body1 + '\n')
-                f.write(mstr + '\n\n')
+            # with open("error.txt", "a") as f:
+            #     f.write(str(e) + '\n')
+            #     f.write(body1 + '\n')
+            #     f.write(mstr + '\n\n')
             # lost = Lost()
             # lost['item_type'] = 'lost'
             # lost['url'] = response.url
