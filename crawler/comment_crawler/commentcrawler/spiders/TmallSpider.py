@@ -6,6 +6,7 @@ import HTMLParser
 from commentcrawler.items import *
 import MySQLdb
 
+
 class TmallSpider(scrapy.Spider):
     name = "tm"
     pages = 0
@@ -178,7 +179,7 @@ class TmallSpider(scrapy.Spider):
         for i in range(1, pages):
             yield scrapy.Request(
                 url="https://rate.tmall.com/list_detail_rate.htm?itemId=%s&sellerId=1&order=3&currentPage=%d" % (
-                product_id[3:], i),
+                    product_id[3:], i),
                 meta={'product_id': response.meta['product_id'], 'page': i},
                 cookies=self.cookies,
                 callback=self.CommentParse
@@ -186,8 +187,13 @@ class TmallSpider(scrapy.Spider):
 
     def CommentParse(self, response):
         sel = scrapy.Selector(response)
-        body = sel.xpath("//body//text()").extract()[0]
-        mstr = "{" + body + "}"
+        body1 = sel.xpath("//body//text()").extract()[0]
+        a = re.compile(r'"reply":""[^},]+"+,', re.S)
+        body = a.sub(r'', body1)
+        if body[-1] == '"':
+            mstr = "{" + body + '"}]}}'
+        else:
+            mstr = "{" + body + "}"
         try:
             mjson = json.loads(mstr)
             for rate in mjson["rateDetail"]["rateList"]:
@@ -195,14 +201,18 @@ class TmallSpider(scrapy.Spider):
                 comment['attribute'] = {}
                 comment['product_id'] = response.meta['product_id']
                 comment['comment_id'] = rate['id']
-                comment['creationTime'] = rate['rateDate']
+                if "rateDate" in rate.keys():
+                    comment['creationTime'] = rate['rateDate']
+                else:
+                    comment['creationTime'] = ''
                 comment['content'] = rate['rateContent'].strip().replace("\n", "")
                 comment['item_type'] = 'comment'
                 comment['referenceName'] = rate['auctionSku']
                 if len(rate['pics']) > 0:
                     comment['attribute']['pics'] = True
                 comment['attribute']['appendComment'] = rate['appendComment']
-                comment['attribute']['userlevel'] = rate['tamllSweetLevel']
+                if "tamllSweetLevel" in rate.keys():
+                    comment['attribute']['userlevel'] = rate['tamllSweetLevel']
                 if rate['attributesMap'] != '' and rate['attributesMap'].containsKey('worth_score'):
                     comment['attribute']['worth_score'] = rate['attributesMap']['worth_score']
                 comment['attribute']['aliMallSeller'] = rate['aliMallSeller']
@@ -210,6 +220,10 @@ class TmallSpider(scrapy.Spider):
                 yield comment
         except Exception, e:
             print str(e)
+            with open("error.txt", "a") as f:
+                f.write(str(e) + '\n')
+                f.write(body1 + '\n')
+                f.write(mstr + '\n\n')
             # lost = Lost()
             # lost['item_type'] = 'lost'
             # lost['url'] = response.url
