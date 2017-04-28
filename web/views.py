@@ -2,8 +2,11 @@
 from __future__ import unicode_literals
 import json
 import logging
+import mimetypes
+from wsgiref.util import FileWrapper
+
 from django.http import HttpResponse
-from django.http import HttpRequest
+from django.http import FileResponse
 
 from django.shortcuts import render
 from sentiment_analysor import sentiment
@@ -105,5 +108,9 @@ def download_comment(request):
     category = NameKey.objects.get(name=data['cat']).key
     brand_id = Url.objects.get(platform=platform, category=category, brand=data['brand']).id
     file_name = platform + '_' + category + '_' + str(brand_id) + '.sql'
-    file_name = 'D:/Yan/gp/gp_web/db_output/' + file_name
-    return HttpRequest()
+    file_path = 'D:/Yan/gp/gp_web/db_output/' + file_name
+    wrapper = FileWrapper(open(str(file_path), str('rb')))
+    content_type = mimetypes.guess_type(file_path)[0]
+    response = HttpResponse(wrapper, content_type=content_type)
+    response['Content-Disposition'] = "attachment; filename=%s" % file_path
+    return response
