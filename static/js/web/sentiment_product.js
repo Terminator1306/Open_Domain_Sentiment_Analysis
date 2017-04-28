@@ -30,8 +30,10 @@ function set_product_list(cat, platform, brand) {
 
 function init_product_click() {
     $(".product").each(function () {
-        var product = $(this).text();
-        $("#show_product").text(product);
+        $(this).click(function () {
+           var product = $(this).text();
+            $("#show_product").text(product);
+        });
     });
     $(".product").first().click()
 }

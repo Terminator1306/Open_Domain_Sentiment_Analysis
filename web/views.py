@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import json
 import logging
+import re
 import mimetypes
 from wsgiref.util import FileWrapper
 
@@ -17,12 +18,14 @@ from db import dbconnect
 import time
 
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 logger = logging.getLogger('mylogger')
 
 db = dbconnect.connect()
+
 
 def crawler(request):
     category = NameKey.objects.values("name").filter(type='category').order_by("id")
@@ -78,10 +81,11 @@ def crawl_comment(request):
     brand = data['brand']
     brand_id = Url.objects.get(platform=platform, category=category, brand=brand).id
     command = "run_crawler.bat %s %d" % (platform, brand_id)
-    # os.system(command)
+    os.system(command)
 
-    output_file = platform + '_' + category + '_' + str(brand_id) + '.sql'
-    output_file = "D:/Yan/gp/gp_web/db_output/" + output_file
+    output_file = platform + '_' + category + '_' + str(brand_id) + '.txt'
+    output_file = os.path.split(os.path.realpath(__file__))[0] + "\\..\\db_output\\" + output_file
+    output_file = re.sub(r'\\', "/", output_file)
     if os.path.exists(output_file):
         os.remove(output_file)
     c = db.cursor()
@@ -107,8 +111,9 @@ def download_comment(request):
     platform = NameKey.objects.get(name=data['platform']).key
     category = NameKey.objects.get(name=data['cat']).key
     brand_id = Url.objects.get(platform=platform, category=category, brand=data['brand']).id
-    file_name = platform + '_' + category + '_' + str(brand_id) + '.sql'
-    file_path = 'D:/Yan/gp/gp_web/db_output/' + file_name
+    file_name = platform + '_' + category + '_' + str(brand_id) + '.txt'
+    file_path = os.path.split(os.path.realpath(__file__))[0] + "\\..\\db_output\\" + file_name
+    file_path = re.sub(r'\\', "/", file_path)
     wrapper = FileWrapper(open(str(file_path), str('rb')))
     content_type = mimetypes.guess_type(file_path)[0]
     response = HttpResponse(wrapper, content_type=content_type)

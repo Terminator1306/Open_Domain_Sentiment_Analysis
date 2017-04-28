@@ -67,6 +67,7 @@ function init_confirm_click() {
         $.getJSON("../crawl_comment",{'platform':platform, 'cat':cat, 'brand':brand},function (data) {
             $("#confirm").text("确定");
             $("#confirm").attr("disabled", false);
+            alert(data['output_file'])
         })
     })
 }
@@ -76,8 +77,7 @@ function init_download_click() {
         var platform = $("#show_platform").text(),
             brand = $("#show_brand").text(),
             cat = $("#show_cat").text();
-        var url = "../download/?platform="+platform+"&brand="+brand+"&cat="+cat;
-        window.frames["d_iframe"].location.href= url;
+        window.frames["d_iframe"].location.href= "../download/?platform="+platform+"&brand="+brand+"&cat="+cat;
         function sa() {
             if(window.frames["d_iframe"].document.readyState!=="complete")
                 setTimeout("sa()",   100);
