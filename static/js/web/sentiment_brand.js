@@ -57,8 +57,21 @@ function init_platform_click() {
     $(".platform").first().click()
 }
 
+function init_confirm_click() {
+    $("#confirm").click(function () {
+        var brand = $("#show_brand").text(),
+            cat = $("#show_cat").text(),
+            platform = $("#show_platform").text();
+        $.getJSON('../compute/',{'cat':cat, 'platform':platform, 'brand':brand}, function (data) {
+            localStorage.setItem("aspect_sentiment", data['result']);
+            localStorage.setItem("hierarchy",data['hierarchy']);
+        })
+    })
+}
+
 function init_click() {
     init_brand_click();
     init_cat_click();
     init_platform_click();
+    init_confirm_click();
 }

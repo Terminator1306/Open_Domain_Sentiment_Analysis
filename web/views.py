@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from django.http import FileResponse
 
 from django.shortcuts import render
-from sentiment_analysor import sentiment
+from sentiment_analysor import sentiment, aspect_tree, sentiment1
 from django.core import serializers
 from models import *
 import os
@@ -60,7 +60,7 @@ def sentiment_brand(request):
 
 def compute_sentiment_comment(request):
     data = request.GET
-    sentiment_result = sentiment.compute_sentiment(data['comment'])
+    sentiment_result = sentiment1.compute_sentiment(data['comment'])
     result = {'aspect': sentiment_result.keys(),
               'value': [sentiment_result[aspect] for aspect in sentiment_result.keys()]}
     return HttpResponse(json.dumps(result))
@@ -119,3 +119,17 @@ def download_comment(request):
     response = HttpResponse(wrapper, content_type=content_type)
     response['Content-Disposition'] = "attachment; filename=%s" % file_path
     return response
+
+
+def compute_brand_product(request):
+    data = request.GET
+    platform = NameKey.objects.get(name=data['platform']).key
+    category = NameKey.objects.get(name=data['cat']).key
+    brand = data['brand']
+    if 'product_id' in data.keys():
+        result, hierarchy = sentiment1.compute(platform, category, brand, data['product_id'])
+    else:
+        result, hierarchy = sentiment1.compute(platform, category, brand)
+    return HttpResponse(json.dumps({'result': result, 'hierarchy': hierarchy}))
+
+

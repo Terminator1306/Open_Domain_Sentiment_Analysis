@@ -75,7 +75,7 @@ class Pipeline(object):
             tx.execute(sql)
         elif item['item_type'] == 'product':
             sql = "insert into web_product (product_id, comment_count, brand, model, price, name,category ,commentTag, attribute, url) values ('%s', '%s', '%s','%s', '%s', '%s', '%s', '%s', '%s', '%s')"%(item['product_id'],item['comment_count'],item['brand'],item['model'],item['price'],
-            item['name'],item['category'],json.dumps(item['commentTag'],ensure_ascii=False),json.dumps(item['attribute'],ensure_ascii=False), item['url'])
+            item['name'],item['category'],json.dumps(item['commentTag'],ensure_ascii=False),json.dumps(item['attribute'], ensure_ascii=False), item['url'])
             tx.execute(sql)
         # elif item['item_type'] == 'lost':
         #     if item['content'] == 'empty page':

@@ -4,13 +4,19 @@ import json
 import sys
 import time
 import urllib2
+
+from copy import deepcopy
+
 from db import dbconnect
 import Levenshtein
+import collections
 
 import HowNet
+from sentiment_analysor import aspect_tree
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
 
 
 def load_data():
@@ -90,7 +96,6 @@ def get_dp(text, count=0):
         else:
             return []
     return content
-
 
 def compute_coefficient(pair):
     if len(pair[2]) == 1:
@@ -172,13 +177,13 @@ def compute_sentiment(text):
 
         for w in positive_words:
             sim = HowNet.similar_word(w, word)
-            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.9:
+            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.8:
                 positive_words.append(w)
                 return 1
 
         for w in negative_words:
             sim = HowNet.similar_word(w, word)
-            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.9:
+            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.8:
                 negative_words.append(w)
                 return -1
 
@@ -244,7 +249,16 @@ def compute_sentiment(text):
     def yield_pair(val, ind, feature_list):
         if len(feature_list) > 0:
             deny_word, deg = get_deny_degree(ind)
-            pair_set.append([feature_list, val, deny_word, deg])
+            if val == 0:
+                for index in range(max(len(dp), ind - 3), min(len(dp), ind+3)):
+                    if dp[index]['cont'] in negative_words:
+                        val = -1
+                        break
+                    if dp[index]['cont'] in positive_words:
+                        val = 1
+                        break
+            if val != 0:
+                pair_set.append([feature_list, val, deny_word, deg])
 
     def find_sbv_coo(ind, feature_list):
         i = ind + 1
@@ -270,7 +284,9 @@ def compute_sentiment(text):
         ad_value = 1
         for word_index in range(a, b):
             if dp[word_index]['relate'] == 'ADV':
-                ad_value *= sentiment_value(dp[word_index]['cont'])
+                v = sentiment_value(dp[word_index]['cont'])
+                if v!= 0:
+                    ad_value *= v
         return ad_value
 
     def get_pair():
@@ -310,6 +326,8 @@ def compute_sentiment(text):
                         pred = [relation['parent']]  # 所有并列关系的谓语下标
 
                         while i >= 0:
+                            if dp[i]['relate'] == 'VOB':
+                                break
                             if dp[i]['relate'] == 'SBV':
                                 if dp[i]['parent'] in pred:
                                     feature_list.extend(get_feature(i))
@@ -317,36 +335,45 @@ def compute_sentiment(text):
                             if dp[i]['relate'] == 'POB':  # 找到这个谓语临近的介宾短语，提取特征词
                                 feature_list.extend(get_feature(i))
                             if dp[i]['relate'] == 'COO':
-                                i = dp[i]['parent']
-                                pred.append(i)
-                                continue
+                                flag = False
+                                for m in range(dp[i]['parent'],i):
+                                    if dp[m]['relate'] in ['SBV', 'VOB']:
+                                        if dp[m]['parent'] in pred:
+                                            feature_list.extend(get_feature(i))
+                                        flag = True
+                                        break
+                                if not flag:
+                                    i = dp[i]['parent']
+                                    pred.append(i)
+                                    continue
                             i -= 1
                         yield_pair(value, index, feature_list)
 
-    for i in get_dp(text):
+    a = get_dp(text)
+    for i in a:
         for j in i:
             dp = j
             get_pair()
 
     result = {}
-    for i in pair_set:
-        coeff = compute_coefficient(i)
-        key = tuple(i[0])
-        value = coeff * i[1]
-        if key in result.keys():
-            if result[key] < value:
-                result[key] = value
-        else:
-            result[key] = value
     # for i in pair_set:
     #     coeff = compute_coefficient(i)
+    #     key = tuple(i[0])
     #     value = coeff * i[1]
-    #     for key in i[0]:
-    #         if key in result.keys():
-    #             result[key].append(value)
-    #         else:
-    #             result[key] = [value]
-    # print result
+    #     if key in result.keys():
+    #         if result[key] < value:
+    #             result[key] = value
+    #     else:
+    #         result[key] = value
+    for i in pair_set:
+        coeff = compute_coefficient(i)
+        value = coeff * i[1]
+        for key in i[0]:
+            if key in result.keys():
+                result[key].append(value)
+            else:
+                result[key] = [value]
+    print result
     # return result
     return {k: sum(v)/len(v) for k, v in result.items()}
 
@@ -354,8 +381,7 @@ def compute_sentiment(text):
 def main():
     sentence = []
     result = []
-    db = dbconnect.connect()
-    cursor = db.cursor()
+    cursor = dbconnect.connect()
     p = 'TM_538921269672'
     cursor.execute(
         "select comment.content from product,comment where comment.product_id = product.product_id and product.product_id = '%s'" %
@@ -384,7 +410,6 @@ def main():
                 else:
                     senti_dict[f] = [value]
 
-    db.close()
     f = open('../output/sentiment/product_general.txt', 'a')
     f.truncate()
     for key, value in senti_dict.iteritems():
@@ -415,7 +440,6 @@ def compute(platform, cat, brand, product_id=None):
 
         sql = 'update web_comment set sentiment = %s where id = %s'
         args = [json.dumps(s, encoding="UTF-8", ensure_ascii=False), i[0]]
-        print r
         c.execute(sql, args)
 
     if product_id is None:
@@ -437,12 +461,37 @@ def compute(platform, cat, brand, product_id=None):
     for i in result:
         i = eval(i)
         for key, value in i.iteritems():
+            key = key.decode("utf-8")
             if key in senti_dict.keys():
                 senti_dict[key].append(value)
             else:
                 senti_dict[key] = [value]
-    return senti_dict
+    return senti_dict, get_hierarchy_sentiment(deepcopy(senti_dict))
 
-# main()
-# compute_sentiment("使用中对双击截屏感觉不好，灵敏度不强，不知道哪里的才是触点。没有双击屏幕唤醒功能，美中不足")
-# compute_sentiment(u"买给妈妈用的，各种功能齐全，系统纯净，价格也很合适，希望妈妈用得开心！")
+aspect_hierarchy = aspect_tree.build()
+
+
+def get_hierarchy_sentiment(aspect_senti_dict):
+    result = {}
+    for high in aspect_hierarchy:
+        high_str = " ".join(high)
+        result[high_str] = {}
+        result[high_str]['low'] = {}
+        result[high_str]['count'] = 0
+        result[high_str]['sum'] = 0
+        result[high_str]['low'][high_str] = []
+        for low in aspect_hierarchy[high]:
+            result[high_str]['low'][" ".join(low)] = []
+        for aspect, senti_list in aspect_senti_dict.items():
+            sim = HowNet.similar_word(str("".join(high)), str("".join(aspect.split(','))))
+            if sim is not None and sim > 0.8:
+                result[high_str]['low'][high_str].extend(senti_list)
+                result[high_str]['count'] += len(senti_list)
+                result[high_str]['sum'] += sum(senti_list)
+            for low in aspect_hierarchy[high]:
+                sim = HowNet.similar_word(str("".join(low)), str("".join(aspect.split(','))))
+                if sim is not None and sim > 0.8:
+                    result[high_str]['low'][" ".join(low)].extend(senti_list)
+                    result[high_str]['count'] += len(senti_list)
+                    result[high_str]['sum'] += sum(senti_list)
+    return result
