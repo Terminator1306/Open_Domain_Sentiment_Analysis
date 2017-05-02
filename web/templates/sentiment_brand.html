@@ -2,8 +2,9 @@
 {% load static %}
 {% block title %} 情感计算 {% endblock %}
 {% block include_js %}
-    <script type="text/javascript" src="{% static 'js/web/crawler.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/web/sentiment_brand.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/doT.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 {% endblock %}
 {% block body_before_js %}
     <script type="text/javascript">
@@ -66,6 +67,9 @@
                  </ul>
             </div>
             <button class="btn btn-primary" id='confirm'>确定</button>
+            <div class="col-sm-12" style="height: 500px" id="aspect_sentiment"></div>
+            <div class="col-sm-12" style="height: 500px" id="hierarchy_top"></div>
+            <div class="col-sm-12" style="height: 500px" id="hierarchy_low"></div>
         </div>
     </div>
 {% endblock %}

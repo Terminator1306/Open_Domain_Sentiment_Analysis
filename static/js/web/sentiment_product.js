@@ -16,7 +16,7 @@ function set_brand_list(cat, platform) {
 }
 
 function set_product_list(cat, platform, brand) {
-    $.getJSON("../get_product", {'cat': cat, 'platform': platform, 'brand': brand},function (data) {
+    $.getJSON("../get_product", {'cat': cat, 'platform': platform, 'brand': brand}, function (data) {
         var tpl = "<li class='product' p_id='{{= it.pk}}'><a href='#'>{{= it.fields.name }}</a></li>",
             evalText = doT.template(tpl),
             content = "";
@@ -31,7 +31,7 @@ function set_product_list(cat, platform, brand) {
 function init_product_click() {
     $(".product").each(function () {
         $(this).click(function () {
-           var product = $(this).text();
+            var product = $(this).text();
             $("#show_product").text(product);
             $("#show_product").attr('p_id', $(this).attr('p_id'));
         });
@@ -45,8 +45,7 @@ function init_cat_click() {
             var cat = $(this).text(),
                 platform = $("#show_platform").text();
             $("#show_cat").text(cat);
-            if(cat && platform)
-            {
+            if (cat && platform) {
                 set_brand_list(cat, platform);
             }
         })
@@ -60,8 +59,7 @@ function init_platform_click() {
             var platform = $(this).text(),
                 cat = $("#show_cat").text();
             $("#show_platform").text(platform);
-            if(cat && platform)
-            {
+            if (cat && platform) {
                 set_brand_list(cat, platform);
             }
         })
@@ -88,44 +86,199 @@ function init_graph() {
         hierarchy_low = echarts.init($("#hierarchy_low").get(0)),
         hierarchy_dict = JSON.parse(localStorage.getItem("hierarchy")),
         all_aspect_senti = JSON.parse(localStorage.getItem("aspect_sentiment"));
-    var keys = Object.keys(hierarchy_dict);
-    var sdic = Object.keys(hierarchy_dict).sort(function (a,b) {return hierarchy_dict[b]['count'] - hierarchy_dict[a]['count']})
-    var hierarchy_key = sdic.slice(0, 8);
+    var sdic = Object.keys(hierarchy_dict).sort(function (a, b) {
+        return hierarchy_dict[b]['count'] - hierarchy_dict[a]['count']
+    });
+    var hierarchy_key = sdic.slice(0, 15);
     var hierarchy_value = [],
         indicator = [];
-    for (var i in hierarchy_key)
-    {
-        hierarchy_value.push(hierarchy_dict[hierarchy_key[i]]['sum'] / hierarchy_dict[hierarchy_key[i]]['count'])
-        indicator.push({text:hierarchy_key[i], max:2, min:-2})
+    for (var i in hierarchy_key) {
+        var value = hierarchy_dict[hierarchy_key[i]]['sum'] / hierarchy_dict[hierarchy_key[i]]['count'];
+        hierarchy_value.push(value.toFixed(2));
+        indicator.push({text: hierarchy_key[i], max: 2, min: -2})
     }
 
     var option_hierarchy = {
-            title : {
-                text: '手机属性'
-            },
-            tooltip : {
-                trigger: 'axis'
-            },
-            polar : [
-               {
-                   indicator : indicator
-                }
-            ],
-            calculable : true,
-            series : [
-                {
-                    name: '属性情感值',
-                    type: 'radar',
-                    data : [
-                        {
-                            value : hierarchy_value,
-                            name: '属性情感值'
+        title: {
+            text: '手机属性'
+        },
+        tooltip: {
+            trigger: 'axis',
+            show: true,
+            formatter: '{a}:{b}'
+        },
+        polar: [
+            {
+                indicator: indicator
+            }
+        ],
+        calculable: true,
+        series: [
+            {
+                clickable: true,
+                name: '属性情感值',
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,
+                            textStyle: {
+                                color: '#800080'
+                            }
+                        },
+                        normal: {
+                            color: 'blue'
                         }
-                    ]
-                }
-            ]
-        };
-    hierarchy_top.setOption(option_hierarchy)
+                    }
+                },
+                type: 'radar',
+                data: [
+                    {
+                        value: hierarchy_value,
+                        name: '属性情感值'
+                    }
+                ]
+            }
+        ]
+    };
+
+    var option = {
+        title: {
+            text: '高层属性情感值',
+            subtext: ''
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['情感值']
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: hierarchy_key
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '情感值',
+                type: 'bar',
+                data: hierarchy_value
+            }
+        ]
+    };
+    hierarchy_top.setOption(option);
+    hierarchy_top.on('click', function (param) {
+        var top_aspect = param.name;
+        var aspect_list = [],
+            count_list = [],
+            value_list = [];
+        for (var word in hierarchy_dict[top_aspect]['low'])
+        {
+            aspect_list.push(word);
+            var each_value = hierarchy_dict[top_aspect]['low'][word];
+            count_list.push(each_value.length);
+            if(each_value.length > 0)
+            {
+                var v = eval(each_value.join('+')) / each_value.length;
+                value_list.push(v.toFixed(2));
+            }
+            else
+                value_list.push(0);
+        }
+        var low_option = {
+                title: {
+                    text: '低层属性情感值',
+                    subtext: top_aspect
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['情感值','评论数']
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: aspect_list
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '情感值'
+                    },
+                    {
+                        type: 'value',
+                        name: '评论数'
+                    }
+                ],
+                series: [
+                    {
+                        name: '情感值',
+                        type: 'bar',
+                        yAxisIndex:0,
+                        data: value_list
+                    },
+                    {
+                        name:'评论数',
+                        type: 'bar',
+                        yAxisIndex:1,
+                        data: count_list
+                    }
+                ]
+            };
+        hierarchy_low.setOption(low_option);
+    });
+
+    var all_aspect = [],
+        avg_value = [];
+    for (var aspect in all_aspect_senti ){
+        all_aspect.push(aspect);
+        if(all_aspect_senti[aspect].length > 0)
+        {
+            var value = eval(all_aspect_senti[aspect]).join('+') / all_aspect_senti[aspect].length;
+            avg_value.push(value.toFixed(2))
+        }
+    }
+    var all_aspect_option={
+        title: {
+            text: '所有属性情感值',
+            subtext: ''
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['情感值']
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: all_aspect
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '情感值',
+                type: 'bar',
+                data: avg_value
+            }
+        ]
+    };
+    aspect_sentiment.setOption(all_aspect_option)
 }
 
 function init_confirm_click() {
@@ -134,9 +287,14 @@ function init_confirm_click() {
             cat = $("#show_cat").text(),
             platform = $("#show_platform").text(),
             product_id = $("#show_product").attr("p_id");
-        $.getJSON('../compute/',{'cat':cat, 'platform':platform, 'brand':brand, 'product_id':product_id}, function (data) {
+        $.getJSON('../compute/', {
+            'cat': cat,
+            'platform': platform,
+            'brand': brand,
+            'product_id': product_id
+        }, function (data) {
             localStorage.setItem("aspect_sentiment", JSON.stringify(data['result']));
-            localStorage.setItem("hierarchy",JSON.stringify(data['hierarchy']));
+            localStorage.setItem("hierarchy", JSON.stringify(data['hierarchy']));
             init_graph();
         })
     })
