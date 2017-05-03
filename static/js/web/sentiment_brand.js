@@ -33,8 +33,7 @@ function init_cat_click() {
             var cat = $(this).text(),
                 platform = $("#show_platform").text();
             $("#show_cat").text(cat);
-            if(cat && platform)
-            {
+            if (cat && platform) {
                 set_brand_list(cat, platform);
             }
         })
@@ -48,8 +47,7 @@ function init_platform_click() {
             var platform = $(this).text(),
                 cat = $("#show_cat").text();
             $("#show_platform").text(platform);
-            if(cat && platform)
-            {
+            if (cat && platform) {
                 set_brand_list(cat, platform);
             }
         })
@@ -155,13 +153,11 @@ function init_graph() {
         var aspect_list = [],
             count_list = [],
             value_list = [];
-        for (var word in hierarchy_dict[top_aspect]['low'])
-        {
+        for (var word in hierarchy_dict[top_aspect]['low']) {
             aspect_list.push(word);
             var each_value = hierarchy_dict[top_aspect]['low'][word];
             count_list.push(each_value.length);
-            if(each_value.length > 0)
-            {
+            if (each_value.length > 0) {
                 var v = eval(each_value.join('+')) / each_value.length;
                 value_list.push(v.toFixed(2));
             }
@@ -169,62 +165,61 @@ function init_graph() {
                 value_list.push(0);
         }
         var low_option = {
-                title: {
-                    text: '低层属性情感值',
-                    subtext: top_aspect
+            title: {
+                text: '低层属性情感值',
+                subtext: top_aspect
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['情感值', '评论数']
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    data: aspect_list
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '情感值'
                 },
-                tooltip: {
-                    trigger: 'axis'
+                {
+                    type: 'value',
+                    name: '评论数'
+                }
+            ],
+            series: [
+                {
+                    name: '情感值',
+                    type: 'bar',
+                    yAxisIndex: 0,
+                    data: value_list
                 },
-                legend: {
-                    data: ['情感值','评论数']
-                },
-                calculable: true,
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: aspect_list
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: '情感值'
-                    },
-                    {
-                        type: 'value',
-                        name: '评论数'
-                    }
-                ],
-                series: [
-                    {
-                        name: '情感值',
-                        type: 'bar',
-                        yAxisIndex:0,
-                        data: value_list
-                    },
-                    {
-                        name:'评论数',
-                        type: 'bar',
-                        yAxisIndex:1,
-                        data: count_list
-                    }
-                ]
-            };
+                {
+                    name: '评论数',
+                    type: 'bar',
+                    yAxisIndex: 1,
+                    data: count_list
+                }
+            ]
+        };
         hierarchy_low.setOption(low_option);
     });
 
     var all_aspect = [],
         avg_value = [];
-    for (var aspect in all_aspect_senti ){
+    for (var aspect in all_aspect_senti) {
         all_aspect.push(aspect);
-        if(all_aspect_senti[aspect].length > 0)
-        {
+        if (all_aspect_senti[aspect].length > 0) {
             var value = eval(all_aspect_senti[aspect]).join('+') / all_aspect_senti[aspect].length;
             avg_value.push(value.toFixed(2))
         }
     }
-    var all_aspect_option={
+    var all_aspect_option = {
         title: {
             text: '所有属性情感值',
             subtext: ''
@@ -236,13 +231,13 @@ function init_graph() {
             data: ['情感值']
         },
         calculable: true,
-        xAxis: [
+        yAxis: [
             {
                 type: 'category',
                 data: all_aspect
             }
         ],
-        yAxis: [
+        xAxis: [
             {
                 type: 'value'
             }
@@ -251,7 +246,25 @@ function init_graph() {
             {
                 name: '情感值',
                 type: 'bar',
-                data: avg_value
+                data: avg_value,
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = [
+                                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        },
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{b}\n{c}'
+                        }
+                    }
+                }
             }
         ]
     };
@@ -263,9 +276,9 @@ function init_confirm_click() {
         var brand = $("#show_brand").text(),
             cat = $("#show_cat").text(),
             platform = $("#show_platform").text();
-        $.getJSON('../compute/',{'cat':cat, 'platform':platform, 'brand':brand}, function (data) {
-            localStorage.setItem("aspect_sentiment", data['result']);
-            localStorage.setItem("hierarchy",data['hierarchy']);
+        $.getJSON('../compute/', {'cat': cat, 'platform': platform, 'brand': brand}, function (data) {
+            localStorage.setItem("aspect_sentiment", JSON.stringify(data['result']));
+            localStorage.setItem("hierarchy", JSON.stringify(data['hierarchy']));
             init_graph()
         })
     })

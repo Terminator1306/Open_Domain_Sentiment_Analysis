@@ -168,11 +168,25 @@ function init_graph() {
             {
                 name: '情感值',
                 type: 'bar',
-                data: hierarchy_value
+                data: hierarchy_value,
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = [
+                                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                            ];
+                            return colorList[params.dataIndex % 15]
+                        }
+
+                    }
+                }
             }
         ]
     };
-    hierarchy_top.setOption(option);
+    hierarchy_top.setOption(option_hierarchy);
     hierarchy_top.on('click', function (param) {
         var top_aspect = param.name;
         var aspect_list = [],
@@ -243,11 +257,12 @@ function init_graph() {
         all_aspect.push(aspect);
         if(all_aspect_senti[aspect].length > 0)
         {
-            var value = eval(all_aspect_senti[aspect]).join('+') / all_aspect_senti[aspect].length;
+            var value = eval(all_aspect_senti[aspect].join('+')) / all_aspect_senti[aspect].length;
             avg_value.push(value.toFixed(2))
         }
     }
-    var all_aspect_option={
+    // $("#aspect_sentiment").height(all_aspect.length * 5);
+    var all_aspect_option = {
         title: {
             text: '所有属性情感值',
             subtext: ''
@@ -259,13 +274,13 @@ function init_graph() {
             data: ['情感值']
         },
         calculable: true,
-        xAxis: [
+        yAxis: [
             {
                 type: 'category',
                 data: all_aspect
             }
         ],
-        yAxis: [
+        xAxis: [
             {
                 type: 'value'
             }
@@ -274,7 +289,25 @@ function init_graph() {
             {
                 name: '情感值',
                 type: 'bar',
-                data: avg_value
+                data: avg_value,
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            // build a color map as your need.
+                            var colorList = [
+                                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                            ];
+                            return colorList[params.dataIndex % 15]
+                        },
+                        label: {
+                            show: true,
+                            position: 'right',
+                            formatter: '{b} {c}'
+                        }
+                    }
+                }
             }
         ]
     };

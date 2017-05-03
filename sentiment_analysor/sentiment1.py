@@ -441,17 +441,19 @@ def compute(platform, cat, brand, product_id=None):
         sql = 'update web_comment set sentiment = %s where id = %s'
         args = [json.dumps(s, encoding="UTF-8", ensure_ascii=False), i[0]]
         c.execute(sql, args)
+        db.commit()
 
     if product_id is None:
-        sql = "select sentiment from web_comment,web_product where web_comment.product_id like %s_%% " \
-              "and web_comment.product_id = web_product.product_id and web_product.category = %s " \
-              "and web_product.brand = %s and sentiment is not NULL"
-        args = [platform.upper(), cat, brand]
+        sql = "select sentiment from web_comment,web_product where web_comment.product_id like '%s_%%' " \
+              "and web_comment.product_id = web_product.product_id and web_product.category = '%s' " \
+              "and web_product.brand = '%s' and sentiment is not NULL" % (platform.upper(), cat, brand)
+        # args = [platform.upper(), cat, brand]
 
     else:
-        sql = "select sentiment from web_comment where product_id = %s and sentiment is not NULL"
-        args = [product_id]
-    c.execute(sql, args)
+        sql = "select sentiment from web_comment where product_id = '%s' and sentiment is not NULL" % product_id
+        # args = [product_id]
+
+    c.execute(sql)
     result = [item[0] for item in c.fetchall()]
 
     db.commit()
