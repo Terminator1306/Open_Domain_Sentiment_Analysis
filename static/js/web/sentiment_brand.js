@@ -215,7 +215,7 @@ function init_graph() {
     for (var aspect in all_aspect_senti) {
         all_aspect.push(aspect);
         if (all_aspect_senti[aspect].length > 0) {
-            var value = eval(all_aspect_senti[aspect]).join('+') / all_aspect_senti[aspect].length;
+            var value = eval(all_aspect_senti[aspect].join('+')) / all_aspect_senti[aspect].length;
             avg_value.push(value.toFixed(2))
         }
     }

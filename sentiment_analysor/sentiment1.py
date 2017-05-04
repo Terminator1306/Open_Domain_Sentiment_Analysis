@@ -177,13 +177,13 @@ def compute_sentiment(text):
 
         for w in positive_words:
             sim = HowNet.similar_word(w, word)
-            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.8:
+            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.9:
                 positive_words.append(w)
                 return 1
 
         for w in negative_words:
             sim = HowNet.similar_word(w, word)
-            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.8:
+            if sim > 0.8 or sim is None and Levenshtein.jaro(w, word) > 0.9:
                 negative_words.append(w)
                 return -1
 
@@ -226,14 +226,14 @@ def compute_sentiment(text):
         return value
 
     def get_deny_degree(index):
-        # 提取程度副词及否定词
+        # 提取index前的程度副词及否定词
         deny_word = []
         deg = []
         for i in range(0, index)[::-1]:
-            if dp[i]['relate'] in ['SBV', 'COO', 'VOB']:
+            if dp[i]['relate'] in ['SBV', 'COO', 'VOB', 'WP']:
                 break
 
-            if dp[i]['relate'] == 'ADV':
+            if dp[i]['relate'] in ['ADV', 'HED']:
                 if is_deny_word(dp[i]['cont']):
                     dp[i]['index'] = i
                     deny_word.append(dp[i])
@@ -250,13 +250,45 @@ def compute_sentiment(text):
         if len(feature_list) > 0:
             deny_word, deg = get_deny_degree(ind)
             if val == 0:
-                for index in range(max(len(dp), ind - 3), min(len(dp), ind+3)):
-                    if dp[index]['cont'] in negative_words:
-                        val = -1
+                # 寻找情感词
+                for index in range(max(0, ind - 6), ind)[::-1]:
+                    if dp[index]['relate'] == 'WP':
                         break
-                    if dp[index]['cont'] in positive_words:
-                        val = 1
+                    elif dp[index]['relate'] in ['ADV', 'HED', 'CMP']:
+                        val += sentiment_value(dp[index]['cont'])
+                for index in range(ind + 1, min(len(dp), ind + 7)):
+                    if dp[index]['relate'] == 'WP':
                         break
+                    elif dp[index]['relate'] in ['ADV', 'HED', 'CMP']:
+                        val += sentiment_value(dp[index]['cont'])
+
+                # 寻找否定词及程度副词
+                if val != 0:
+                    for index in range(max(0, ind - 6), ind)[::-1]:
+                        if dp[index]['relate'] == 'WP':
+                            break
+                        elif dp[index]['relate'] in ['ADV', 'HED']:
+                            de = degree(dp[index]['cont'])
+                            if de > 0:
+                                dp[index]['index'] = index
+                                dp[index]['degree'] = de
+                                deg.append(dp[index])
+                            if is_deny_word(dp[index]['cont']):
+                                dp[index]['index'] = index
+                                deny_word.append(dp[index])
+
+                    for index in range(ind+1, min(len(dp), ind + 7)):
+                        if dp[index]['relate'] == 'WP':
+                            break
+                        elif dp[index]['relate'] in ['ADV', 'HED']:
+                            de = degree(dp[index]['cont'])
+                            if de > 0:
+                                dp[index]['index'] = index
+                                dp[index]['degree'] = de
+                                deg.append(dp[index])
+                            if is_deny_word(dp[index]['cont']):
+                                dp[index]['index'] = index
+                                deny_word.append(dp[index])
             if val != 0:
                 pair_set.append([feature_list, val, deny_word, deg])
 
@@ -280,14 +312,14 @@ def compute_sentiment(text):
             if dp[i]['relate'] == 'COO' and dp[i]['parent'] == ind:
                 feature_list.extend(get_feature(i))
 
-    def adv_value(a, b):
-        ad_value = 1
-        for word_index in range(a, b):
-            if dp[word_index]['relate'] == 'ADV':
-                v = sentiment_value(dp[word_index]['cont'])
-                if v!= 0:
-                    ad_value *= v
-        return ad_value
+    # def adv_value(a, b):
+    #     ad_value = 1
+    #     for word_index in range(a, b):
+    #         if dp[word_index]['relate'] == 'ADV':
+    #             v = sentiment_value(dp[word_index]['cont'])
+    #             if v!= 0:
+    #                 ad_value *= v
+    #     return ad_value
 
     def get_pair():
         for index, relation in enumerate(dp):
@@ -306,7 +338,7 @@ def compute_sentiment(text):
                             break
                     if not follow:
                         value = sentiment_value(dp[relation['parent']]['cont'])
-                        value *= adv_value(index + 1, relation['parent'])
+                        # value *= adv_value(index + 1, relation['parent']) # 应该记录
                         yield_pair(value, relation['parent'], feature_list)
                     find_sbv_coo(relation['parent'], feature_list)
 
@@ -326,7 +358,7 @@ def compute_sentiment(text):
                         pred = [relation['parent']]  # 所有并列关系的谓语下标
 
                         while i >= 0:
-                            if dp[i]['relate'] == 'VOB':
+                            if dp[i]['relate'] in ['VOB']:
                                 break
                             if dp[i]['relate'] == 'SBV':
                                 if dp[i]['parent'] in pred:
@@ -375,7 +407,7 @@ def compute_sentiment(text):
                 result[key] = [value]
     print result
     # return result
-    return {k: sum(v)/len(v) for k, v in result.items()}
+    return {k: max(v) for k, v in result.items()}
 
 
 def main():
@@ -486,13 +518,13 @@ def get_hierarchy_sentiment(aspect_senti_dict):
             result[high_str]['low'][" ".join(low)] = []
         for aspect, senti_list in aspect_senti_dict.items():
             sim = HowNet.similar_word(str("".join(high)), str("".join(aspect.split(','))))
-            if sim is not None and sim > 0.8:
+            if sim is not None and sim > 0.9:
                 result[high_str]['low'][high_str].extend(senti_list)
                 result[high_str]['count'] += len(senti_list)
                 result[high_str]['sum'] += sum(senti_list)
             for low in aspect_hierarchy[high]:
                 sim = HowNet.similar_word(str("".join(low)), str("".join(aspect.split(','))))
-                if sim is not None and sim > 0.8:
+                if sim is not None and sim > 0.9:
                     result[high_str]['low'][" ".join(low)].extend(senti_list)
                     result[high_str]['count'] += len(senti_list)
                     result[high_str]['sum'] += sum(senti_list)
