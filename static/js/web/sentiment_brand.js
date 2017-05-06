@@ -143,6 +143,7 @@ function init_graph() {
             {
                 name: '情感值',
                 type: 'bar',
+                barMaxWidth: 30,
                 data: hierarchy_value
             }
         ]
@@ -196,14 +197,38 @@ function init_graph() {
                 {
                     name: '情感值',
                     type: 'bar',
+                    barMaxWidth: 30,
                     yAxisIndex: 0,
+                    itemStyle: {
+                        normal: {
+                            color: function () {
+                                // build a color map as your need.
+                                var colorList = [
+                                    '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B'
+                                ];
+                                return colorList[Math.floor(Math.random() * 5 + 1)]
+                            }
+                        }
+                    },
                     data: value_list
                 },
                 {
                     name: '评论数',
                     type: 'bar',
+                    barMaxWidth: 30,
                     yAxisIndex: 1,
-                    data: count_list
+                    data: count_list,
+                    itemStyle: {
+                        normal: {
+                            color: function () {
+                                // build a color map as your need.
+                                var colorList = [
+                                    '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                                ];
+                                return colorList[Math.floor(Math.random() * 5 + 1)]
+                            }
+                        }
+                    }
                 }
             ]
         };
@@ -246,6 +271,7 @@ function init_graph() {
             {
                 name: '情感值',
                 type: 'bar',
+                barMaxWidth: 30,
                 data: avg_value,
                 itemStyle: {
                     normal: {

@@ -5,6 +5,9 @@
     <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/web/sentiment_product.js' %}"></script>
 {% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/web/product.css' %}"/>
+{% endblock %}
 {% block body_before_js %}
     <script type="text/javascript">
         $().ready(function () {
@@ -19,70 +22,75 @@
             <h3 class="panel-title">情感计算 产品</h3>
         </div>
         <div class="panel-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="col-sm-2">
+                            电商平台
+                        </div>
+                        <div class="col-sm-10 btn-group">
+                            <button type="button" class="btn btn-default" id="show_platform"></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% for p in platform %}
+                                    <li class="platform"><a>{{ p.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
 
-            <div class="col-sm-2">
-                电商平台
-            </div>
-            <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default" id="show_platform"></button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">切换下拉菜单</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    {% for p in platform %}
-                        <li class="platform"><a>{{ p.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
+                        <div class="col-sm-2">
+                            商品类型
+                        </div>
+                        <div class="col-sm-10 btn-group">
+                            <button type="button" class="btn btn-default" id="show_cat"></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                {% for c in category %}
+                                    <li class="cat"><a href="#">{{ c.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
 
-            <div class="col-sm-2">
-                商品类型
+                        <div class="col-sm-2">
+                            品牌
+                        </div>
+                        <div class="col-sm-10 btn-group">
+                            <button type="button" class="btn btn-default" id="show_brand"></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" id="brand_ul" style="height:30ex;overflow:scroll">
+                                {% for b in brand %}
+                                    <li class="brand"><a href="#">{{ b.brand }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-sm-2">
+                            产品
+                        </div>
+                        <div class="col-sm-10 btn-group">
+                            <button type="button" class="btn btn-default" p_id="" id="show_product"></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">切换下拉菜单</span>
+                            </button>
+                            <ul class="dropdown-menu" id="product_ul" role="menu" style="height:30ex;overflow:scroll">
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary" id='confirm'>确定</button>
+                    </div>
+                    <div class="col-sm-6" style="height: 500px" id="aspect_sentiment"></div>
+                    <div class="col-sm-6" style="height: 500px" id="hierarchy_top"></div>
+                    <div class="col-sm-6" style="height: 500px" id="hierarchy_low"></div>
+                </div>
             </div>
-            <div class="col-sm-10 btn-group">
-                <button type="button" class="btn btn-default" id="show_cat"></button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">切换下拉菜单</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    {% for c in category %}
-                        <li class="cat"><a href="#">{{ c.name }}</a> </li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <div class="col-sm-2">
-                品牌
-            </div>
-            <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default" id="show_brand"></button>
-                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                     <span class="caret"></span>
-                     <span class="sr-only">切换下拉菜单</span>
-                 </button>
-                 <ul class="dropdown-menu" role="menu" id="brand_ul" style="height:30ex;overflow:scroll">
-                     {% for b in brand %}
-                         <li class="brand"><a href="#" >{{ b.brand }}</a></li>
-                     {% endfor %}
-                 </ul>
-            </div>
-            <div class="col-sm-2">
-                产品
-            </div>
-            <div class="col-sm-10 btn-group">
-                 <button type="button" class="btn btn-default" p_id="" id="show_product"></button>
-                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                     <span class="caret"></span>
-                     <span class="sr-only">切换下拉菜单</span>
-                 </button>
-                 <ul class="dropdown-menu" id="product_ul" role="menu" style="height:30ex;overflow:scroll">
-                 </ul>
-            </div>
-            <button class="btn btn-primary" id='confirm'>确定</button>
-            <div class="col-sm-12" style="height: 1000px" id="aspect_sentiment"></div>
-            <div class="col-sm-12" style="height: 500px" id="hierarchy_top"></div>
-            <div class="col-sm-12" style="height: 500px" id="hierarchy_low"></div>
         </div>
     </div>
 {% endblock %}

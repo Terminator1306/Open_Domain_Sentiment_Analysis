@@ -251,12 +251,16 @@ def compute_sentiment(text):
             deny_word, deg = get_deny_degree(ind)
             if val == 0:
                 # 寻找情感词
-                for index in range(max(0, ind - 6), ind)[::-1]:
+                for index in range(max(0, ind - 3), ind)[::-1]:
+                    if val != 0:
+                        break
                     if dp[index]['relate'] == 'WP':
                         break
                     elif dp[index]['relate'] in ['ADV', 'HED', 'CMP']:
                         val += sentiment_value(dp[index]['cont'])
-                for index in range(ind + 1, min(len(dp), ind + 7)):
+                for index in range(ind + 1, min(len(dp), ind + 6)):
+                    if val != 0:
+                        break
                     if dp[index]['relate'] == 'WP':
                         break
                     elif dp[index]['relate'] in ['ADV', 'HED', 'CMP']:
@@ -264,7 +268,7 @@ def compute_sentiment(text):
 
                 # 寻找否定词及程度副词
                 if val != 0:
-                    for index in range(max(0, ind - 6), ind)[::-1]:
+                    for index in range(max(0, ind - 3), ind)[::-1]:
                         if dp[index]['relate'] == 'WP':
                             break
                         elif dp[index]['relate'] in ['ADV', 'HED']:
@@ -277,7 +281,7 @@ def compute_sentiment(text):
                                 dp[index]['index'] = index
                                 deny_word.append(dp[index])
 
-                    for index in range(ind+1, min(len(dp), ind + 7)):
+                    for index in range(ind+1, min(len(dp), ind + 6)):
                         if dp[index]['relate'] == 'WP':
                             break
                         elif dp[index]['relate'] in ['ADV', 'HED']:

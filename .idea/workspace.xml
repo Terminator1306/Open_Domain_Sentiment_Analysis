@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88120356-5f26-4a9e-b4b0-9e35dcd084c5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/h.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/crawler.html" afterPath="$PROJECT_DIR$/web/templates/crawler.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/sentiment_brand.html" afterPath="$PROJECT_DIR$/web/templates/sentiment_brand.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/web/comment.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/web/product.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/web/comment.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sentiment_analysor/sentiment1.py" afterPath="$PROJECT_DIR$/sentiment_analysor/sentiment1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/web/sentiment_brand.js" afterPath="$PROJECT_DIR$/static/js/web/sentiment_brand.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/web/sentiment_product.js" afterPath="$PROJECT_DIR$/static/js/web/sentiment_product.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/sentiment_comment.html" afterPath="$PROJECT_DIR$/web/templates/sentiment_comment.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/sentiment_product.html" afterPath="$PROJECT_DIR$/web/templates/sentiment_product.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/views.py" afterPath="$PROJECT_DIR$/web/views.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/web/migrations/__init__.py" afterPath="$PROJECT_DIR$/static/css/web/brand.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,49 +35,83 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/models.py">
+      <file leaf-file-name="sentiment_brand.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/web/sentiment_brand.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="28" lean-forward="false" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+            <state relative-caret-position="4540">
+              <caret line="227" column="52" lean-forward="false" selection-start-line="227" selection-start-column="52" selection-end-line="227" selection-end-column="52" />
               <folding>
-                <element signature="e#24#63#0" expanded="true" />
+                <element signature="n#!!block;n#init_confirm_click#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sentiment_brand.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/sentiment_brand.html">
+      <file leaf-file-name="sentiment_product.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/web/sentiment_product.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1160">
-              <caret line="58" column="55" lean-forward="false" selection-start-line="58" selection-start-column="12" selection-end-line="58" selection-end-column="55" />
+            <state relative-caret-position="240">
+              <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+              <folding>
+                <element signature="e#3402#4442#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="product.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/css/web/product.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="crawler.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/crawler.html">
+      <file leaf-file-name="comment.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/css/web/comment.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1320">
-              <caret line="66" column="14" lean-forward="false" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
+            <state relative-caret-position="60">
+              <caret line="3" column="1" lean-forward="false" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="comment.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/web/comment.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1000">
+              <caret line="52" column="17" lean-forward="false" selection-start-line="40" selection-start-column="15" selection-end-line="52" selection-end-column="17" />
+              <folding>
+                <element signature="n#!!doc;n#load_bar#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="crawler.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/web/crawler.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1380">
+              <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/product_sentiment_analysor/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="460">
+              <caret line="26" column="27" lean-forward="false" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
@@ -87,38 +124,18 @@
       <file leaf-file-name="sentiment_comment.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/sentiment_comment.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1680">
-              <caret line="84" column="87" lean-forward="false" selection-start-line="84" selection-start-column="87" selection-end-line="84" selection-end-column="87" />
+            <state relative-caret-position="140">
+              <caret line="7" column="87" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="87" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sentiment_product.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/sentiment_product.html">
+      <file leaf-file-name="sentiment_brand.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/templates/sentiment_brand.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1540">
-              <caret line="77" column="14" lean-forward="false" selection-start-line="77" selection-start-column="14" selection-end-line="77" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/tests.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="7" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://C:/Python27/Lib/site-packages/django/conf/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="640">
-              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="1340">
+              <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -130,6 +147,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -145,9 +164,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/product_sentiment_analysor/urls.py" />
         <option value="$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/items.py" />
-        <option value="$PROJECT_DIR$/db/dbconnect.py" />
         <option value="$PROJECT_DIR$/db/strip.py" />
         <option value="$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/spiders/JDSpider.py" />
         <option value="$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/spiders/zol.py" />
@@ -156,24 +173,36 @@
         <option value="$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/settings.py" />
         <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/LostSpider.py" />
         <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/zol.py" />
-        <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/TmallSpider.py" />
         <option value="$PROJECT_DIR$/product_sentiment_analysor/settings.py" />
-        <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/JDSpider.py" />
         <option value="$PROJECT_DIR$/crawler/comment_crawler/item.json" />
         <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/settings.py" />
         <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/items.py" />
         <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/urlSpider.py" />
-        <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/pipelines.py" />
         <option value="$PROJECT_DIR$/web/models.py" />
         <option value="$PROJECT_DIR$/web/tests.py" />
         <option value="$PROJECT_DIR$/web/test.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/web/templates/sentiment_brand.html" />
-        <option value="$PROJECT_DIR$/web/templates/sentiment_product.html" />
-        <option value="$PROJECT_DIR$/web/templates/sentiment_comment.html" />
+        <option value="$PROJECT_DIR$/web/h.py" />
+        <option value="$PROJECT_DIR$/web/templates/base.html" />
+        <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/TmallSpider.py" />
+        <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/JDSpider.py" />
+        <option value="$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/pipelines.py" />
+        <option value="$PROJECT_DIR$/db/dbconnect.py" />
+        <option value="$PROJECT_DIR$/product_sentiment_analysor/urls.py" />
         <option value="$PROJECT_DIR$/web/views.py" />
         <option value="$PROJECT_DIR$/web/templates/crawler.html" />
-        <option value="$PROJECT_DIR$/web/h.py" />
+        <option value="$PROJECT_DIR$/static/js/web/crawler.js" />
+        <option value="$PROJECT_DIR$/web/templates/sentiment_brand.html" />
+        <option value="$PROJECT_DIR$/sentiment_analysor/sentiment1.py" />
+        <option value="$PROJECT_DIR$/run_crawler_all.bat" />
+        <option value="$PROJECT_DIR$/static/css/web/brand.css" />
+        <option value="$PROJECT_DIR$/static/css/web/comment.css" />
+        <option value="$PROJECT_DIR$/web/templates/sentiment_comment.html" />
+        <option value="$PROJECT_DIR$/static/js/web/comment.js" />
+        <option value="$PROJECT_DIR$/static/js/web/sentiment_brand.js" />
+        <option value="$PROJECT_DIR$/static/js/web/sentiment_product.js" />
+        <option value="$PROJECT_DIR$/static/css/web/product.css" />
+        <option value="$PROJECT_DIR$/web/templates/sentiment_product.html" />
       </list>
     </option>
   </component>
@@ -184,7 +213,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1358" />
     <option name="y" value="-8" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
@@ -205,6 +234,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -246,6 +276,82 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gp_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -359,29 +465,29 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gp1" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path" value="F:/nodejs/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="F:\nodejs\node.exe" />
     <property name="add_unversioned_files" value="true" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Yan\毕设\gp_web\crawler\comment_crawler" />
+      <recent name="D:\project\product_sentiment_analysor\sentiment_analysor\aspect_data" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Yan\gp\gp_web\static\js" />
       <recent name="D:\Yan\gp\gp_web\web" />
       <recent name="D:\Yan\毕设\gp_web\crawler\comment_crawler\commentcrawler" />
       <recent name="D:\Yan\毕设\gp_web\crawler\comment_crawler\commentcrawler\spiders" />
       <recent name="D:\project\Pycharm Project\product_sentiment_analysor\db" />
-      <recent name="D:\project\product_sentiment_analysor\sentiment_analysor" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Yan\毕设\gp_web\crawler\comment_crawler" />
-      <recent name="D:\project\product_sentiment_analysor\sentiment_analysor\aspect_data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -396,7 +502,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.h">
+  <component name="RunManager" selected="Django server.product_sentiment_analysor">
     <configuration default="false" name="strip" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -683,6 +789,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="product_sentiment_analysor.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -783,7 +890,42 @@
       <option name="project" value="LOCAL" />
       <updated>1492519729525</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="提交">
+      <created>1492776764755</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1492776764755</updated>
+    </task>
+    <task id="LOCAL-00007" summary="文件下载没写完">
+      <created>1493215510158</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1493215510158</updated>
+    </task>
+    <task id="LOCAL-00008" summary="完成文件下载">
+      <created>1493352791816</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1493352791816</updated>
+    </task>
+    <task id="LOCAL-00009" summary="前端基本完成">
+      <created>1493732381113</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1493732381113</updated>
+    </task>
+    <task id="LOCAL-00010" summary="前端基本完成">
+      <created>1493872451490</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1493872451490</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -796,14 +938,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="1358" y="-8" width="1382" height="744" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27760968" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33963692" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295082" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3262295" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
@@ -848,14 +990,18 @@
     <MESSAGE value="添加tmall从命令行传递商品类别及url的功能" />
     <MESSAGE value="完成了url的爬虫" />
     <MESSAGE value="修改了sentiment_product的界面" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改了sentiment_product的界面" />
+    <MESSAGE value="提交" />
+    <MESSAGE value="文件下载没写完" />
+    <MESSAGE value="完成文件下载" />
+    <MESSAGE value="前端基本完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="前端基本完成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/db/strip.py</url>
-          <line>6</line>
+          <line>7</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -873,112 +1019,29 @@
           <line>68</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sentiment_analysor/sentiment1.py</url>
+          <line>391</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/sentiment_analysor/sentiment1.py</url>
+          <line>351</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="16" />
+      <option name="time" value="63" />
     </breakpoint-manager>
     <watches-manager>
+      <configuration name="Python.DjangoServer">
+        <watch expression="max(len(dp), ind - 3)" language="Python" />
+      </configuration>
       <configuration name="PythonConfigurationType">
         <watch expression="mlist[0]" />
       </configuration>
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/product_sentiment_analysor/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/product_sentiment_analysor/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/commentcrawler/brand.txt" />
-    <entry file="file://$PROJECT_DIR$/sentiment_analysor/aspect_data/aspect.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2325">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sentiment_analysor/sentiment_data/d1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="12" column="2" lean-forward="true" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sentiment_analysor/aspect_data/hierarchy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-146">
-          <caret line="26" column="16" lean-forward="true" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sentiment_analysor/sentiment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="71" lean-forward="false" selection-start-line="10" selection-start-column="71" selection-end-line="10" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/apps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/spiders/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/db/dbconnect.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="52" lean-forward="false" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/spiders/zol.py" />
-    <entry file="file://$PROJECT_DIR$/db/strip.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <marker date="1492483584163" expanded="true" signature="74:133" ph="select id, g... pos_neg1" />
-            <marker date="1492483584163" expanded="true" signature="435:461" ph="update pos_n... " />
-            <marker date="1492483584163" expanded="true" signature="435:465" ph="update pos_n... " />
-            <marker date="1492483584163" expanded="true" signature="435:535" ph="update pos_n... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/items.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/middlewares.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/result.txt" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/pipelines.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/spiders/JDSpider.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/spiders/urlSpider.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/settings.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/commentcrawler/spiders/TmallSpider.py" />
-    <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/get.py" />
     <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/test.py" />
     <entry file="file://$PROJECT_DIR$/crawler/CommentCrawler/scrapy.cfg" />
     <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/scrapy.cfg">
@@ -1004,13 +1067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/JDSpider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/item.json" />
     <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/items.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1033,20 +1089,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/pipelines.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="78" column="134" lean-forward="false" selection-start-line="78" selection-start-column="134" selection-end-line="78" selection-end-column="134" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/TmallSpider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3360">
-          <caret line="172" column="40" lean-forward="false" selection-start-line="172" selection-start-column="40" selection-end-line="172" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
@@ -1059,7 +1101,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="640">
           <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1075,7 +1116,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1093,52 +1133,180 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/sentiment_brand.html">
+    <entry file="file://$PROJECT_DIR$/web/h.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1160">
-          <caret line="58" column="55" lean-forward="false" selection-start-line="58" selection-start-column="12" selection-end-line="58" selection-end-column="55" />
+        <state relative-caret-position="56">
+          <caret line="54" column="29" lean-forward="false" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/sentiment_product.html">
+    <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/JDSpider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1540">
-          <caret line="77" column="14" lean-forward="false" selection-start-line="77" selection-start-column="14" selection-end-line="77" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="240">
+          <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/sentiment_comment.html">
+    <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/pipelines.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1680">
-          <caret line="84" column="87" lean-forward="false" selection-start-line="84" selection-start-column="87" selection-end-line="84" selection-end-column="87" />
-          <folding />
+        <state relative-caret-position="380">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="21" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/MySQLdb/cursors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="180" column="59" lean-forward="false" selection-start-line="180" selection-start-column="52" selection-end-line="180" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/dbconnect.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/django/core/handlers/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3300">
+          <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_output/jd_phone_1.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/django/core/servers/basehttp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2785">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="28" lean-forward="false" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
-          <folding>
-            <element signature="e#24#63#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2340">
+          <caret line="135" column="0" lean-forward="false" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/crawler.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="66" column="14" lean-forward="false" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="455">
+          <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/h.py">
+    <entry file="file://$PROJECT_DIR$/web/templates/bottom.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="54" column="29" lean-forward="false" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/require.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/echarts.common.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/echarts.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sentiment_analysor/sentiment_data/negative_words.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_crawler_all" />
+    <entry file="file://$PROJECT_DIR$/run_crawler_all.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_crawler.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawler/comment_crawler/commentcrawler/spiders/TmallSpider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2999">
+          <caret line="63" column="23" lean-forward="false" selection-start-line="63" selection-start-column="23" selection-end-line="63" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sentiment_analysor/sentiment1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+          <folding>
+            <element signature="e#4418#4848#0" expanded="false" />
+            <element signature="e#5498#5711#0" expanded="false" />
+            <element signature="e#5743#6431#0" expanded="false" />
+            <element signature="e#6473#7100#0" expanded="false" />
+            <element signature="e#9535#10068#0" expanded="false" />
+            <element signature="e#10127#10284#0" expanded="false" />
+            <marker date="1493873635255" expanded="true" signature="14470:14589" ph="select comme... product" />
+            <marker date="1493873635255" expanded="true" signature="15805:16067" ph="select id, c... web_comment" />
+            <marker date="1493873635255" expanded="true" signature="16129:16210" ph="select id, c... web_comment" />
+            <marker date="1493873635255" expanded="true" signature="16401:16452" ph="update web_c... " />
+            <marker date="1493873635255" expanded="true" signature="16621:16885" ph="select senti... web_comment" />
+            <marker date="1493873635255" expanded="true" signature="16994:17077" ph="select senti... web_comment" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/web/brand.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sentiment_analysor/aspect_data/phone/aspect.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="59" column="1" lean-forward="false" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sentiment_analysor/HowNet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="413" column="0" lean-forward="false" selection-start-line="413" selection-start-column="0" selection-end-line="413" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/sentiment_brand.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1340">
+          <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -1148,6 +1316,83 @@
         <state relative-caret-position="340">
           <caret line="17" column="7" lean-forward="false" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/product_sentiment_analysor/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="26" column="27" lean-forward="false" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/web/crawler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1380">
+          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/web/comment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1000">
+          <caret line="52" column="17" lean-forward="false" selection-start-line="40" selection-start-column="15" selection-end-line="52" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!doc;n#load_bar#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/web/sentiment_product.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+          <folding>
+            <element signature="e#3402#4442#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/web/comment.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3" column="1" lean-forward="false" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/web/sentiment_brand.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4540">
+          <caret line="227" column="52" lean-forward="false" selection-start-line="227" selection-start-column="52" selection-end-line="227" selection-end-column="52" />
+          <folding>
+            <element signature="n#!!block;n#init_confirm_click#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/sentiment_comment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="87" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/web/product.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/sentiment_product.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="23" column="32" lean-forward="true" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
         </state>
       </provider>
     </entry>
