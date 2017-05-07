@@ -32,7 +32,7 @@ function init_product_click() {
     $(".product").each(function () {
         $(this).click(function () {
             var product = $(this).text();
-            $("#show_product").text(product);
+            $("#show_product").text(product.slice(0,28));
             $("#show_product").attr('p_id', $(this).attr('p_id'));
         });
     });
@@ -186,7 +186,7 @@ function init_graph() {
             }
         ]
     };
-    hierarchy_top.setOption(option_hierarchy);
+    hierarchy_top.setOption(option);
     hierarchy_top.on('click', function (param) {
         var top_aspect = param.name;
         var aspect_list = [],
