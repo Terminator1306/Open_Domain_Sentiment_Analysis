@@ -87,10 +87,10 @@ def get_dp(text, count=0):
         result = urllib2.urlopen(
             "%sapi_key=%s&text=%s&format=%s&pattern=%s" % (url_get_base, api_key, text, form, patt))
         content = json.loads(result.read().strip())
-        time.sleep(2)
+        time.sleep(0.2)
     except Exception, e:
         print "try again"
-        time.sleep(10)
+        time.sleep(1)
         if count < 5:
             return get_dp(text, count + 1)
         else:
