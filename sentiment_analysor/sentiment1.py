@@ -4,7 +4,7 @@ import json
 import sys
 import time
 import urllib2
-
+import os
 from copy import deepcopy
 
 from db import dbconnect
@@ -14,12 +14,24 @@ import collections
 import HowNet
 from sentiment_analysor import aspect_tree
 
+from pyltp import SentenceSplitter, Segmentor, Postagger, Parser, NamedEntityRecognizer, SementicRoleLabeller
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+MODELDIR="D:\\project\\Pycharm Project\\product_sentiment_analysor\\sentiment_analysor\\ltp\\ltp_data"
+postagger = Postagger()
+postagger.load(os.path.join(MODELDIR, "pos.model"))
+
+parser = Parser()
+parser.load(os.path.join(MODELDIR, "parser.model"))
+
+segmentor = Segmentor()
+segmentor.load(os.path.join(MODELDIR, "cws.model"))
 
 
-def load_data():
+def load_data(cat):
+    aspect_sentiment = {}
     negative_words = []
     positive_words = []
     deny_words = []
@@ -72,10 +84,25 @@ def load_data():
         if s[:3] == codecs.BOM_UTF8:
             s = s[3:]
         degree6.append(s.decode('utf-8'))
-    for i in open('sentiment_analysor/aspect_data/phone/aspect.txt', 'r'):
+    for i in open('sentiment_analysor/aspect_data/%s/aspect.txt' % cat, 'r'):
         feature.append(i.strip().decode('utf-8').split(','))
+    for i in open('sentiment_analysor/aspect_data/%s/word_sentiment_pair.txt' % cat, 'r'):
+        aspect_sentiment = {tuple(k.split("_")): v for k, v in json.loads(i).items()}
+    return aspect_sentiment, feature, negative_words, positive_words, deny_words, [degree1, degree2, degree3, degree4, degree5, degree6]
 
-    return feature, negative_words, positive_words, deny_words, [degree1, degree2, degree3, degree4, degree5, degree6]
+
+def get_dp_local(text):
+    result = []
+    sentences = SentenceSplitter.split(str(text))
+    for sentence in sentences:
+        dp = []
+        words = segmentor.segment(sentence)
+        postags = postagger.postag(words)
+        arcs = parser.parse(words, postags)
+        for index, arc in enumerate(arcs):
+            dp.append({"relate": arc.relation, "cont": words[index].decode("utf-8"), "id": index, "parent": arc.head - 1, 'pos': postags[index]})
+        result.append(dp)
+    return [result]
 
 
 def get_dp(text, count=0):
@@ -90,7 +117,7 @@ def get_dp(text, count=0):
         time.sleep(0.2)
     except Exception, e:
         print "try again"
-        time.sleep(1)
+        time.sleep(3)
         if count < 5:
             return get_dp(text, count + 1)
         else:
@@ -146,9 +173,9 @@ def compute_coefficient(pair):
     return coeff
 
 
-def compute_sentiment(text):
+def compute_sentiment(text, cat):
     # 直接宾语中挖掘极性动词，
-    feature, negative_words, positive_words, deny_words, degrees = load_data()
+    aspect_sentiment, feature, negative_words, positive_words, deny_words, degrees = load_data(cat)
     pair_set = []
     dp = []
 
@@ -169,7 +196,12 @@ def compute_sentiment(text):
         # return feature_temp
         return result
 
-    def sentiment_value(word):
+    def sentiment_value(feature_list, word):
+        if len(feature_list) == 1:
+            if word in aspect_sentiment[feature_list[0]]['good']:
+                return 1
+            if word in aspect_sentiment[feature_list[0]]['bad']:
+                return -1
         if word in positive_words:
             return 1
         if word in negative_words:
@@ -257,14 +289,14 @@ def compute_sentiment(text):
                     if dp[index]['relate'] == 'WP':
                         break
                     elif dp[index]['relate'] in ['ADV', 'HED', 'CMP']:
-                        val += sentiment_value(dp[index]['cont'])
+                        val += sentiment_value(feature_list, dp[index]['cont'])
                 for index in range(ind + 1, min(len(dp), ind + 6)):
                     if val != 0:
                         break
                     if dp[index]['relate'] == 'WP':
                         break
                     elif dp[index]['relate'] in ['ADV', 'HED', 'CMP']:
-                        val += sentiment_value(dp[index]['cont'])
+                        val += sentiment_value(feature_list, dp[index]['cont'])
 
                 # 寻找否定词及程度副词
                 if val != 0:
@@ -305,7 +337,7 @@ def compute_sentiment(text):
                     if dp[j]['parent'] == i and dp[j]['relate'] != 'COO':
                         follow = True
                 if not follow:
-                    value = sentiment_value(dp[i]['cont'])
+                    value = sentiment_value(feature_list, dp[i]['cont'])
                     yield_pair(value, i, feature_list)
             if dp[i]['relate'] in ["SBV", "VOB"]:
                 break
@@ -341,7 +373,7 @@ def compute_sentiment(text):
                             follow = True
                             break
                     if not follow:
-                        value = sentiment_value(dp[relation['parent']]['cont'])
+                        value = sentiment_value(feature_list, dp[relation['parent']]['cont'])
                         # value *= adv_value(index + 1, relation['parent']) # 应该记录
                         yield_pair(value, relation['parent'], feature_list)
                     find_sbv_coo(relation['parent'], feature_list)
@@ -351,12 +383,12 @@ def compute_sentiment(text):
                 # 宾语是特征词，谓语表达情感倾向，例如 很喜欢手机外观
                 if len(feature_list) > 0:
                     find_vob_coo_feature(index, feature_list)
-                    value = sentiment_value(dp[relation['parent']]['cont'])
+                    value = sentiment_value(feature_list, dp[relation['parent']]['cont'])
                     yield_pair(value, relation['parent'], feature_list)
 
                 # 宾语是情感词,找到特征词主语 例如，手机用着很流畅
                 else:
-                    value = sentiment_value(relation['cont'])
+                    value = sentiment_value(feature_list, relation['cont'])
                     if value != 0:
                         i = relation['parent']
                         pred = [relation['parent']]  # 所有并列关系的谓语下标
@@ -385,7 +417,7 @@ def compute_sentiment(text):
                             i -= 1
                         yield_pair(value, index, feature_list)
 
-    a = get_dp(text)
+    a = get_dp_local(text)
     for i in a:
         for j in i:
             dp = j
@@ -411,47 +443,7 @@ def compute_sentiment(text):
                 result[key] = [value]
     print result
     # return result
-    return {k: max(v) for k, v in result.items()}
-
-
-def main():
-    sentence = []
-    result = []
-    cursor = dbconnect.connect()
-    p = 'TM_538921269672'
-    cursor.execute(
-        "select comment.content from product,comment where comment.product_id = product.product_id and product.product_id = '%s'" %
-        (p,))
-    for c in cursor.fetchall():
-        r = compute_sentiment(c[0])
-        sentence.append(c[0])
-        result.append(r)
-    f = open("../output/sentiment/comment_sentiments.txt", 'a')
-    f.truncate()
-    for i, sen in enumerate(sentence):
-        f.write(sen.decode('utf-8') + '\n')
-        for key in result[i].keys():
-            s = ''
-            for a in key:
-                s += ','.join(a) + ' '
-            f.write(s + ':' + str(result[i][key]) + ';')
-        f.write('\n\n\n')
-
-    senti_dict = {}
-    for i in result:
-        for key, value in i.iteritems():
-            for f in key:
-                if f in senti_dict.keys():
-                    senti_dict[f].append(value)
-                else:
-                    senti_dict[f] = [value]
-
-    f = open('../output/sentiment/product_general.txt', 'a')
-    f.truncate()
-    for key, value in senti_dict.iteritems():
-        f.write(','.join(key) + '  ' + str(len(value)) + '  ' + str(sum(value)/len(value)) + '\n')
-
-    print 'finish'
+    return {k: sum(v) / len(v) for k, v in result.items()}
 
 
 def compute(platform, cat, brand, product_id=None):
@@ -469,7 +461,7 @@ def compute(platform, cat, brand, product_id=None):
     c.execute(sql)
 
     for i in c.fetchall():
-        r = compute_sentiment(i[1])
+        r = compute_sentiment(i[1], cat)
         s = {}
         for k, v in r.items():
             s[','.join(k)] = v
@@ -533,3 +525,4 @@ def get_hierarchy_sentiment(aspect_senti_dict):
                     result[high_str]['count'] += len(senti_list)
                     result[high_str]['sum'] += sum(senti_list)
     return result
+
