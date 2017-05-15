@@ -197,7 +197,7 @@ def compute_sentiment(text, cat):
         return result
 
     def sentiment_value(feature_list, word):
-        if len(feature_list) == 1:
+        if len(feature_list) > 0:
             if word in aspect_sentiment[feature_list[0]]['good']:
                 return 1
             if word in aspect_sentiment[feature_list[0]]['bad']:
