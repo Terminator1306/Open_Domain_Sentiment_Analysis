@@ -88,6 +88,12 @@ def load_data(cat):
         feature.append(i.strip().decode('utf-8').split(','))
     for i in open('sentiment_analysor/aspect_data/%s/word_sentiment_pair.txt' % cat, 'r'):
         aspect_sentiment = {tuple(k.split("_")): v for k, v in json.loads(i).items()}
+    # bad_count = 0
+    # good_count = 0
+    # for k in aspect_sentiment:
+    #     bad_count += len(aspect_sentiment[k]['bad'])
+    #     good_count += len(aspect_sentiment[k]['good'])
+
     return aspect_sentiment, feature, negative_words, positive_words, deny_words, [degree1, degree2, degree3, degree4, degree5, degree6]
 
 
@@ -180,21 +186,27 @@ def compute_sentiment(text, cat):
     dp = []
 
     def get_feature(index):
-        feature_temp = [dp[index]['cont']]
-        i = index - 1
-        while i >= 0:
-            if dp[i]['relate'] == 'ATT' and dp[i]['parent'] == index:
-                feature_temp.append(dp[i]['cont'])
-                index = i
-            i -= 1
+        feature_temp = []
+        # feature_temp = [dp[index]['cont']]
+        # i = index - 1
+        # while i >= 0:
+        #     if dp[i]['relate'] == 'ATT' and dp[i]['parent'] == index:
+        #         feature_temp.append(dp[i]['cont'])
+        #         index = i
+        #     i -= 1
+        for m in range(max(0, index-1), min(len(dp), index+2)):
+            feature_temp.append(dp[m]['cont'])
 
         result = []
         for f in feature:
             if set(f).issubset(feature_temp):
                 result.append(tuple(f))
-
-        # return feature_temp
-        return result
+        if len(result) > 0:
+            max_len = max([len(_) for _ in result])
+            # return feature_temp
+            return [_ for _ in result if len(_) == max_len]
+        else:
+            return result
 
     def sentiment_value(feature_list, word):
         if len(feature_list) > 0:
@@ -513,14 +525,12 @@ def get_hierarchy_sentiment(aspect_senti_dict):
         for low in aspect_hierarchy[high]:
             result[high_str]['low'][" ".join(low)] = []
         for aspect, senti_list in aspect_senti_dict.items():
-            sim = HowNet.similar_word(str("".join(high)), str("".join(aspect.split(','))))
-            if sim is not None and sim > 0.9:
+            if high == tuple(aspect.split(',')):
                 result[high_str]['low'][high_str].extend(senti_list)
                 result[high_str]['count'] += len(senti_list)
                 result[high_str]['sum'] += sum(senti_list)
             for low in aspect_hierarchy[high]:
-                sim = HowNet.similar_word(str("".join(low)), str("".join(aspect.split(','))))
-                if sim is not None and sim > 0.9:
+                if low == tuple(aspect.split(',')):
                     result[high_str]['low'][" ".join(low)].extend(senti_list)
                     result[high_str]['count'] += len(senti_list)
                     result[high_str]['sum'] += sum(senti_list)

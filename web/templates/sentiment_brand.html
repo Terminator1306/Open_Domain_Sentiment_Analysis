@@ -24,7 +24,7 @@
         <div class="panel-body">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <div class="col-sm-12">
                             <div class="lab col-sm-2">
                                 电商平台
@@ -73,15 +73,19 @@
                                     {% endfor %}
                                 </ul>
                             </div>
-                             <div class="col-sm-2">
+
+                            <div class="col-sm-2">
                                 <button class="btn btn-primary" id='confirm'>确定</button>
                             </div>
-                            <div class="col-sm-12" style="height: 250px" id="hierarchy_top"></div>
-                            <div class="col-sm-12" style="height: 250px" id="hierarchy_low"></div>
                         </div>
-                        <div class="col-sm-6" style="height: 250px" id="aspect_sentiment"></div>
+                        <div class="col-sm-12" id="labels" style="height: 50px;margin-top: 10px"></div>
+                        <div class="col-sm-12" style="height: 250px" id="hierarchy_top"></div>
+                        <div class="col-sm-12" style="height: 250px" id="hierarchy_low"></div>
                     </div>
+                    <div class="col-sm-5" style="height: 1250px" id="aspect_sentiment"></div>
                 </div>
             </div>
         </div>
+
+    </div>
 {% endblock %}

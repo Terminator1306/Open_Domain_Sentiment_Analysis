@@ -7,13 +7,13 @@ db.set_character_set('utf8')
 c = db.cursor()
 c.execute("set names utf8")
 # c.execute("select bad from pos_neg1 where LENGTH (bad) < 120 and LENGTH(bad) > 0 limit 4500, 6500")
-c.execute("select content from comment where LENGTH (content) > 0 and LENGTH (content)< 120 limit 7500,9500")
+c.execute("select content from comment where LENGTH (content) > 0 and LENGTH (content)< 160 limit 35500,3000")
 
 mdb = MySQLdb.connect("127.0.0.1", "root", "", "gp_web")
 mdb.set_character_set('utf8')
 c1 = mdb.cursor()
 c1.execute("set names utf8")
-index = 6950
+index = 17000
 for i in c.fetchall():
     s = {}
     bad_list = []

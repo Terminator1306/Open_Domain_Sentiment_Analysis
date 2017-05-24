@@ -32,7 +32,7 @@ function init_product_click() {
     $(".product").each(function () {
         $(this).click(function () {
             var product = $(this).text();
-            $("#show_product").text(product.slice(0,28));
+            $("#show_product").text(product.slice(0, 28));
             $("#show_product").attr('p_id', $(this).attr('p_id'));
         });
     });
@@ -100,7 +100,7 @@ function init_graph() {
 
     var option_hierarchy = {
         title: {
-            text: '手机属性'
+            text: '高层属性情感值'
         },
         tooltip: {
             trigger: 'axis',
@@ -186,92 +186,140 @@ function init_graph() {
             }
         ]
     };
-    hierarchy_top.setOption(option);
-    hierarchy_top.on('click', function (param) {
-        var top_aspect = param.name;
-        var aspect_list = [],
-            count_list = [],
-            value_list = [];
-        for (var word in hierarchy_dict[top_aspect]['low']) {
-            aspect_list.push(word);
-            var each_value = hierarchy_dict[top_aspect]['low'][word];
-            count_list.push(each_value.length);
-            if (each_value.length > 0) {
-                var v = eval(each_value.join('+')) / each_value.length;
-                value_list.push(v.toFixed(2));
+    hierarchy_top.setOption(option_hierarchy);
+    var tpl = "";
+    for (var k in hierarchy_key) {
+        tpl += '<span class="label label-primary" style="margin-right: 3px">' + hierarchy_key[k] + '</span>';
+    }
+    $("#labels").html(tpl);
+    $(".label-primary").each(function () {
+        $(this).click(function () {
+            var top_aspect = $(this).text();
+            var aspect_list = [],
+                count_list = [],
+                value_list = [];
+            for (var word in hierarchy_dict[top_aspect]['low']) {
+                aspect_list.push(word);
+                var each_value = hierarchy_dict[top_aspect]['low'][word];
+                count_list.push(each_value.length);
+                if (each_value.length > 0) {
+                    var v = eval(each_value.join('+')) / each_value.length;
+                    value_list.push(v.toFixed(2));
+                }
+                else
+                    value_list.push(0);
             }
-            else
-                value_list.push(0);
-        }
-        var low_option = {
-            title: {
-                text: '低层属性情感值',
-                subtext: top_aspect
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['情感值', '评论数']
-            },
-            calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    data: aspect_list
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '情感值'
+            var low_option = {
+                title: {
+                    text: '低层属性情感值',
+                    subtext: top_aspect
                 },
-                {
-                    type: 'value',
-                    name: '评论数'
-                }
-            ],
-            series: [
-                {
-                    name: '情感值',
-                    type: 'bar',
-                    barMaxWidth: 30,
-                    yAxisIndex: 0,
-                    itemStyle: {
-                        normal: {
-                            color: function () {
-                                // build a color map as your need.
-                                var colorList = [
-                                    '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B'
-                                ];
-                                return colorList[Math.floor(Math.random() * 5 + 1)]
-                            }
-                        }
-                    },
-                    data: value_list
+                tooltip: {
+                    trigger: 'axis'
                 },
-                {
-                    name: '评论数',
-                    type: 'bar',
-                    barMaxWidth: 30,
-                    yAxisIndex: 1,
-                    data: count_list,
-                    itemStyle: {
-                        normal: {
-                            color: function () {
-                                // build a color map as your need.
-                                var colorList = [
-                                    '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
-                                ];
-                                return colorList[Math.floor(Math.random() * 5 + 1)]
-                            }
-                        }
+                legend: {
+                    data: ['情感值', '评论数']
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: aspect_list
                     }
-                }
-            ]
-        };
-        hierarchy_low.setOption(low_option);
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '情感值'
+                    },
+                    {
+                        type: 'value',
+                        name: '评论数'
+                    }
+                ],
+                series: [
+                    {
+                        name: '情感值',
+                        type: 'bar',
+                        barMaxWidth: 30,
+                        yAxisIndex: 0,
+                        data: value_list
+                    },
+                    {
+                        name: '评论数',
+                        type: 'bar',
+                        barMaxWidth: 30,
+                        yAxisIndex: 1,
+                        data: count_list
+                    }
+                ]
+            };
+            hierarchy_low.setOption(low_option);
+        })
     });
+    // hierarchy_top.on('click', function (param) {
+    //     var top_aspect = param.name;
+    //     var aspect_list = [],
+    //         count_list = [],
+    //         value_list = [];
+    //     for (var word in hierarchy_dict[top_aspect]['low']) {
+    //         aspect_list.push(word);
+    //         var each_value = hierarchy_dict[top_aspect]['low'][word];
+    //         count_list.push(each_value.length);
+    //         if (each_value.length > 0) {
+    //             var v = eval(each_value.join('+')) / each_value.length;
+    //             value_list.push(v.toFixed(2));
+    //         }
+    //         else
+    //             value_list.push(0);
+    //     }
+    //     var low_option = {
+    //         title: {
+    //             text: '低层属性情感值',
+    //             subtext: top_aspect
+    //         },
+    //         tooltip: {
+    //             trigger: 'axis'
+    //         },
+    //         legend: {
+    //             data: ['情感值', '评论数']
+    //         },
+    //         calculable: true,
+    //         xAxis: [
+    //             {
+    //                 type: 'category',
+    //                 data: aspect_list
+    //             }
+    //         ],
+    //         yAxis: [
+    //             {
+    //                 type: 'value',
+    //                 name: '情感值'
+    //             },
+    //             {
+    //                 type: 'value',
+    //                 name: '评论数'
+    //             }
+    //         ],
+    //         series: [
+    //             {
+    //                 name: '情感值',
+    //                 type: 'bar',
+    //                 barMaxWidth: 30,
+    //                 yAxisIndex: 0,
+    //                 data: value_list
+    //             },
+    //             {
+    //                 name: '评论数',
+    //                 type: 'bar',
+    //                 barMaxWidth: 30,
+    //                 yAxisIndex: 1,
+    //                 data: count_list
+    //             }
+    //         ]
+    //     };
+    //     hierarchy_low.setOption(low_option);
+    // });
 
     var all_aspect = [],
         avg_value = [];
