@@ -60,7 +60,8 @@ def sentiment_brand(request):
 
 def compute_sentiment_comment(request):
     data = request.GET
-    sentiment_result = sentiment1.compute_sentiment(data['comment'], 'phone')
+    category = NameKey.objects.get(name=data['cat']).key
+    sentiment_result = sentiment1.compute_sentiment(data['comment'], category)
     result = {'aspect': sentiment_result.keys(),
               'value': [sentiment_result[aspect] for aspect in sentiment_result.keys()]}
     return HttpResponse(json.dumps(result))

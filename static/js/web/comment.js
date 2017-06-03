@@ -61,6 +61,7 @@ function init_confirm() {
     $("#confirm").click(function () {
         var data = {};
         data.comment = $("#comment").val();
+        data.cat = $("#show_cat").text();
         $("#confirm").text("计算中");
         $("#confirm").attr("disabled", true);
         $.getJSON("../compute/comment/", data, function (data) {
